@@ -1,63 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import './contacts.css';
+import ContactItem from './contactItem';
 
-import axios from 'axios';
+import { useSocketContext } from '../../../hooks/useSocketContext';
 
 
-//console.log('contacts render')
-// Individual Contact Component
-const ContactItem = ({ user, onClick, unreadCount, latestMessageSnippet }) => (
-  
-  <li onClick={() => onClick(user)}>
-      
-    <div className={`contact-item ${unreadCount > 0 ? 'has-unread' : ''}`}>
-      <div className="contact-details">
-        <img src={user.profilepic} alt={user.username} className="profile-pix" />
-        <div className="info">
-          <div className="name">
-            <h4>{user.username}</h4>
-            {unreadCount > 0 && <div className="notification-badge">{unreadCount}</div>}
-          </div>
-          {latestMessageSnippet && <p className="latest-message">{latestMessageSnippet}</p>}
-        </div>
-      </div>
-    </div>
-  </li>
-);
+/**
+ * Todo: Rewrite this entire code to make it maintenable 
+ * @param {*} param0 
+ * @returns 
+ */
 
-function Contacts({ selectedUser, setSelectedUser, Online, setMessages, messages, readnotification }) {
-  const [unreadMessages, setUnreadMessages] = useState([]);
 
- // console.log('messages on contact.js', messages)
+function Contacts() {
+const { usersmatching, searchForUser ,contactsHistory,onlineUsers, sendMessage, setMessages, messages, readnotification, selectedUser, setSelectedUser } = useSocketContext()
+const [unreadMessages, setUnreadMessages] = useState([]);
 
+ //sets unread messages when the message variable changes
   useEffect(() => {
     let newUnreadMessages = messages  
     .filter(message => message.status.read === false)
       .map(message => ({ message, userId: message.sender }));
 
-      
-
     setUnreadMessages(newUnreadMessages);
-
-   // console.log('when messages change', messages, 'what is in unreadmessages', newUnreadMessages )
   }, [messages]);
 
-//console.log('all unread messages', unreadMessages, "all messages", messages)
+  //console.log('unread messages after before a use is selected', unreadMessages);
 
+  //when a particular user is selected then it means their message is read so update the status of the message
   useEffect(() => {
     if (selectedUser) {
+      //select the selectedusers messages and update them in the unreadmessages
       setUnreadMessages(prevUnreadMessages =>
         prevUnreadMessages.map(message =>
           message.userId === selectedUser.userid ? { ...message, status: { received: true, read: true } } : message
         )
       );
 
-      //console.log('unread messages after selected user', unreadMessages);
+     // console.log('unread messages after selected user', unreadMessages);
 
       // updatereplace the read messages in messages
-      //maybe redundant. might want to get the updated list from the sever itself with various 
-      setMessages( previousmessages => {
-        return  previousmessages.map(prevMess => prevMess.sender === selectedUser.userid ? { ...prevMess, status: { received: true, read: true } } : prevMess )
+      //select the selectedusers messages and update them in the messages
+      setMessages( messages => {
+        return  messages.map(message => message.sender === selectedUser.userid ? { ...message, status: { received: true, read: true } } : message )
     })
 
 
@@ -74,21 +59,41 @@ function Contacts({ selectedUser, setSelectedUser, Online, setMessages, messages
     }
   }, [selectedUser]);
 
-  const currentUserID = localStorage.userid;
+ 
 
   const getContactsWithUnreadMessages = () => {
-    return Online.filter(user => user.userid !== currentUserID).map(user => {
-      const userUnreadMessages = unreadMessages.filter(message => message.userId === user.userid);
+    
+//console.log('usersmatching', usersmatching)
+let contactsHistory2 = [];
+    if (usersmatching ){ contactsHistory2 = [ ...contactsHistory, ...usersmatching]}
+//console.log('contactHistory on getconta', contactsHistory2)
+    return contactsHistory2.map(user => {
+
+
+      if (user.length !== 0){   
+
+        //console.log('contactHistory user', user)
+      const userUnreadMessages = unreadMessages.filter(message => message.userId === user._userid);
       const unreadCount = userUnreadMessages.length;
       const latestMessage = userUnreadMessages[unreadCount - 1]?.content;
 
       const latestMessageSnippet = latestMessage ? `${latestMessage.content}` : null;
-
-      return { ...user, unreadCount, latestMessageSnippet };
+      const torender = { ...user, unreadCount, latestMessageSnippet }
+      //console.log('torender', torender)
+      return torender;
+    }
     });
   };
 
   const sortedContacts = getContactsWithUnreadMessages().sort((a, b) => (b.unreadCount ? 1 : 0) - (a.unreadCount ? 1 : 0));
+ //console.log('sortedcontatcs', sortedContacts)
+
+
+//console.log(typeof(searchForUser), 'what is search fo user')
+
+
+
+
 
   return (
 < div className="entire-contacts">
@@ -104,6 +109,7 @@ Inbox  {unreadMessages.count > 0 && <div className="notification-badge">{unreadM
           type="text"
           placeholder=" 🔍  Search..."
           className="search_contacts"
+          onChange={(e) => searchForUser(e.target.value)}
         />
 </div>
 
@@ -115,7 +121,8 @@ Inbox  {unreadMessages.count > 0 && <div className="notification-badge">{unreadM
                         
         <ul id="contact-list">
           {sortedContacts.map(user => (
-            <ContactItem
+            
+            <ContactItem 
               key={user.email}
               user={user}
               onClick={setSelectedUser}

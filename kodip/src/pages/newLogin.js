@@ -36,7 +36,7 @@ const toggleDropdownFalse = () =>{setShowDropdown(false);}
 const handleClick = () => {setModalOpen(true);};
 const handleClose = () => {setModalOpen(false);};
 
-
+console.log('isLoggedIn?', isLoggedIn)
   return (
     <div >
         {/* If user is not logged in activitate the modal using handleclick */}

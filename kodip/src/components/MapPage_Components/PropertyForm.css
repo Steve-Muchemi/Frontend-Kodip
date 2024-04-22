@@ -134,6 +134,8 @@ flex-direction: row;
 
 .toggle-more-description {
   margin-top: 15px;
+  display: flex;
+  
 }
 
 .more-description {

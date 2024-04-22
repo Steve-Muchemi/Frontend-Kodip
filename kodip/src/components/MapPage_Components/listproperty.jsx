@@ -21,17 +21,12 @@ const PropertyForm = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(price, 'price')//this is showing the price of 3000 
     
     const formData = new FormData();
     formData.append('propertyType', propertyType);
     formData.append('price', price);
-    formData.append('phoneNumber', phoneNumber);
-    formData.append('receiveInquiries', receiveInquiries);
-    formData.append('receiveAppInbox', receiveAppInbox);
-    formData.append('receiveMobileMessage', receiveMobileMessage);
-    formData.append('receiveWhatsapp', receiveWhatsapp);
-    formData.append('receiveEmail', receiveEmail);
-    formData.append('code', code);
     formData.append('bedrooms', bedrooms);
     formData.append('bathrooms', bathrooms);
     formData.append('measurement', measurement);
@@ -40,8 +35,12 @@ const PropertyForm = () => {
       formData.append('images', image);
     });
 
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
+
     try {
-      const response = await axios.post('http://localhost:3002/api/createpost', formData, {
+      const response = await axios.post('http://localhost:3002/api/property/post', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -68,17 +67,38 @@ const PropertyForm = () => {
     setBathrooms('');
     setMeasurement('');
     setDescription('');
-    setImages([]);
+    
   };
 
-  const handleVerifyClick = () => {
-    setCode('123456');
-  };
 
+  
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
-    setImages(files);
+    console.log('file to add', files)
+   
+   // console.log('images curently present',images)
+  //  console.log(typeof(images), 'images are, ')
+
+
+    const concat = [...images, ...files]
+
+    setImages(concat);
   };
+
+  const addMoreImages = () =>{
+    const newInput = document.createElement('input');
+    newInput.type = 'file';
+    newInput.accept = 'image/*';
+    newInput.multiple = true;
+    newInput.addEventListener('change', handleImageUpload);
+    document.querySelector('.form-group2').appendChild(newInput);
+
+  }
+
+
+
+
+
 
   return (
     <div className="property-form-container">
@@ -100,51 +120,16 @@ const PropertyForm = () => {
               <input type="text" id="price" value={price} onChange={(e) => setPrice(e.target.value)} required />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="phoneNumber">Phone Number:</label>
-              <input type="text" id="phoneNumber" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
-              <button type="button" className="verify-button" onClick={handleVerifyClick}>Verify</button>
-            </div>
-
-            {code && (
-              <div className="form-group">
-                <label htmlFor="code">Code:</label>
-                <input type="text" id="code" value={code} readOnly />
-              </div>
-            )}
-            <p className="note">We take security of personal data seriously. Your phone number will not be visible to others.</p>
           </div>
 
           <div className='post-form-flex2'>
-            <div className="form-group">
-              <label htmlFor="receiveInquiries">Receive Inquiries:</label>
-              <div className="toggle-button">
-                <input type="checkbox" id="receiveInquiries" checked={receiveInquiries} onChange={() => setReceiveInquiries(!receiveInquiries)} />
-                <label htmlFor="receiveInquiries" className="toggle-label"></label>
-              </div>
-              <p className="note">You can always turn off inquiries when you want.</p>
-            </div>
-            {receiveInquiries && (
-              <div className="inquiries-options">
-                <div className="form-group">
-                  <label>Receive Inquiries On:</label>
-                  <div className="checkbox-group">
-                    <input type="checkbox" id="appInbox" checked={receiveAppInbox} onChange={() => setReceiveAppInbox(!receiveAppInbox)} />
-                    <label htmlFor="appInbox">Inbox</label>
-                    <input type="checkbox" id="mobileMessage" checked={receiveMobileMessage} onChange={() => setReceiveMobileMessage(!receiveMobileMessage)} />
-                    <label htmlFor="mobileMessage">Text Message</label>
-                    <input type="checkbox" id="whatsapp" checked={receiveWhatsapp} onChange={() => setReceiveWhatsapp(!receiveWhatsapp)} />
-                    <label htmlFor="whatsapp">Whatsapp</label>
-                    <input type="checkbox" id="email" checked={receiveEmail} onChange={() => setReceiveEmail(!receiveEmail)} />
-                    <label htmlFor="email">Email</label>
-                  </div>
-                </div>
-              </div>
-            )}
+            
+
 
             <div className="toggle-more-description">
+              <label htmlFor="showMoreDescription" >Show Property on Listings Page?</label>
               <input type="checkbox" id="showMoreDescription" checked={showMoreDescription} onChange={() => setShowMoreDescription(!showMoreDescription)} />
-              <label htmlFor="showMoreDescription" >Add Photos and More Description</label>
+              
             </div>
 
             {showMoreDescription && (
@@ -166,16 +151,17 @@ const PropertyForm = () => {
                   <input type="number" id="measurement" value={measurement} onChange={(e) => setMeasurement(e.target.value)} />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group2">
                   <label htmlFor="images">Property Photos:</label>
                   <input type="file" id="images" accept="image/*" onChange={handleImageUpload} multiple required />
-                  <input type="file" id="images" accept="image/*" onChange={handleImageUpload} multiple required />
+                  
+                  <button type="button" onClick={addMoreImages} style={{backgroundClolour:'lightgreen'}}>Add More Images </button>
 
                 </div>
               </div>
             )}
 
-            <button type="submit" className="add-photos-button">Add Property</button>
+            <button type="submit" className="add-photos-button" onChange={handleFormSubmit}>Add Property</button>
           </div>
         </div>
       </form>

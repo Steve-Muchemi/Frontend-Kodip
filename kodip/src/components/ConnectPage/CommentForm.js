@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faCoins } from '@fortawesome/free-solid-svg-icons';
 import './styles.css';
 
+
 const CommentForm = ({ postId }) => {
   const [comment, setComment] = useState('');
   const [image, setImage] = useState(null);

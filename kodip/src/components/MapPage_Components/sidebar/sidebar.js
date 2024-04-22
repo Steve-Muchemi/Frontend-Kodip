@@ -16,7 +16,7 @@ const SideBar = () => {
   const { onlineUsers, send, setMessages, messages, readnotification } = useSocketContext();
   const locationPath = useLocation().pathname;
 
-  console.log('sidebar render');
+  //console.log('sidebar render');
 
   const handleClickEnvelope = (event) => {
     event.preventDefault();

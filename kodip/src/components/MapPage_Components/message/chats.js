@@ -2,74 +2,101 @@ import React, { useEffect, useState } from 'react';
 import './chat.css';
 import SendMessage from './sendMessage';
 
-
-
-function Chats({ selectedUser, selectMessages, newMessage, setNewMessage, handleclicksend, Online }) {
+function Chats({ 
+  selectedUser, 
+  contactsHistory, 
+  selectMessages, 
+  newMessage, 
+  setNewMessage, 
+  handleclicksend, 
+  Online 
+}) {
   const [messages, setMessages] = useState([]);
 
+  // Update messages when selectMessages changes
   useEffect(() => {
     setMessages(selectMessages);
   }, [selectMessages]);
 
+  // Render component
   return (
     <div className="entire-container">
+      
+      {/* Selected User Section */}
       <div className="selected-User">
-        {selectedUser.username ? (
-          <h3>
+        {selectedUser.username && (
+          <>
             {selectedUser.profilepic && <img src={selectedUser.profilepic} className="profile-pix" alt="Profile" />}
-            {selectedUser.username}
-          </h3>
-        ) : null}
+            <h3>{selectedUser.username}</h3>
+          </>
+        )}
       </div>
 
+      {/* Chat Container */}
       <div className="chat-container">
+        
+        {/* Chat Messages */}
         <div className="chat-messages">
           <div className='chatdiv' style={{ paddingLeft: '20px', overflow: 'auto' }}></div>
+          
+          {/* Combine and sort messages */}
+          {messages.concat(contactsHistory)
+            .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+            .map((message, index) => {
 
-          {messages.map((message, index) => (
-            <div key={index} className="message">
-              {Online.map((user) => {
-                
-                if (message.sender !== localStorage.userid && user.userid === message.sender) {
-                 
-                  return (
-                    <div className='sender-message' key={user._id}>
-                      <img src={user.profilepic} alt={user.username} className="profile-pix" />
-                      <div className='message'>{message.content}</div>
-                      <div className='timestamp'>{message.timestamp}</div>
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })}
-            </div>
-          ))}
-
-          {messages.map((message, index) => (
-            <div key={index} className="message">
-              {message.sender === localStorage.userid && (
-                <div className='user-message'>
-                  <img src={localStorage.profilepic} alt={message.sender.username} className="profile-pix" />
-                  <div className='message&timestamp'>
-                    <div className='message'>{message.content}</div>
-                    <div className='timestamp-doubleticks'>
-                      <div className='timestamp'>{message.timestamp}</div>
-                      <div className='doubleticks'></div>
-                      {message.status.read === true && <p className='blueticks'>✓✓ </p>}
-                      {message.status.read === false && <p className='grayticks'>✓✓ </p>}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+              if (selectedUser.length !== 0){ 
+                //console.log('selected user', selectedUser)
+              if ( message.sender === localStorage.userid) {
+                // Render user's sent messages
+                return renderUserMessage(message, index);
+              } else {
+                // Render received messages
+                return renderReceivedMessage(message, index, contactsHistory);
+              }
+              }
+            })}
         </div>
 
-        <SendMessage setNewMessage={setNewMessage} newMessage={newMessage} handleclicksend={handleclicksend} />
+        {/* Send Message Component */}
+        <SendMessage 
+          setNewMessage={setNewMessage} 
+          newMessage={newMessage} 
+          handleclicksend={handleclicksend} 
+        />
       </div>
     </div>
   );
 }
+
+// Render user's sent messages
+const renderUserMessage = (message, index) => (
+  <div key={index} className="user-message">
+    <img src={localStorage.profilepic} alt={localStorage.username} className="profile-pix" />
+    <div className='message&timestamp'>
+      <div className='message'>{message.content}</div>
+      <div className='timestamp-doubleticks'>
+        <div className='timestamp'>{message.timestamp}</div>
+        <div className='doubleticks'></div>
+        {message.status.read ? <p className='blueticks'>✓✓ </p> : <p className='grayticks'>✓✓ </p>}
+      </div>
+    </div>
+  </div>
+);
+
+// Render received messages
+const renderReceivedMessage = (message, index, contactsHistory) => {
+  const contactUser = contactsHistory.find(user => user._id === message.sender);
+  if (contactUser) {
+    return (
+      <div className='sender-message' key={message._id}>
+        <img src={contactUser.profilepic} alt={contactUser.username} className="profile-pix" />
+        <div className='message'>{message.content}</div>
+        <div className='timestamp'>{message.timestamp}</div>
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
 
 export default Chats;

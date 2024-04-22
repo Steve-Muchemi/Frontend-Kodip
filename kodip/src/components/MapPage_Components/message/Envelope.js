@@ -8,7 +8,10 @@ import { useSocketContext } from '../../../hooks/useSocketContext.js';
 
 
 function MessageApp() {
-const { onlineUsers, sendMessage, setMessages, messages, readnotification, selectedUser, setSelectedUser } = useSocketContext()
+const { contactsHistory,onlineUsers, sendMessage, setMessages, messages, readnotification, selectedUser, setSelectedUser } = useSocketContext()
+
+
+//console.log(onlineUsers, 'online users')
 
 const [selectMessages, setSelectMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -31,30 +34,30 @@ var viewportHeight = window.innerHeight || document.documentElement.clientHeight
     //console.log('Before calling send function');
 
 
-  //console.log(selectedUser);
+  console.log('selectedUser',selectedUser,'newMessage', newMessage);
 
   sendMessage(selectedUser, newMessage);
 
-    console.log('After calling send function');
+
+    
 }
 
 useEffect(() => {
-//console.log('message and selected user', selectedUser)
+
   let newselectMessages = [];
 
 if (selectedUser){
     messages.map((message)=> {
        
-
-        if (message.sender){
-        if (message.reciever === selectedUser.userid || message.sender === selectedUser.userid){
+   if (message.receiver === selectedUser._id || message.sender === selectedUser._id){
     newselectMessages.push(message)
-    }}
+    }
        
            
       
     })
 }
+console.log('message and selected user', selectedUser, newselectMessages)
 setSelectMessages(newselectMessages);
 },[selectedUser, messages])
 
@@ -74,13 +77,13 @@ return (
              {// This is the contacts column
 
             }
-            <Contacts selectedUser = {selectedUser} setSelectedUser={setSelectedUser} Online = { onlineUsers } userfrompin = {userfrompin} messages={messages} setMessages={setMessages}
+            <Contacts selectedUser = {selectedUser}  contactsHistory ={contactsHistory} setSelectedUser={setSelectedUser} Online = { onlineUsers } userfrompin = {userfrompin} messages={messages} setMessages={setMessages}
             readnotification={readnotification}
             />
 
             {// This is the messages column. Shows previous messages and messages being sent
             }
-            <Chats selectedUser={selectedUser} selectMessages={selectMessages} newMessage={newMessage} setNewMessage={setNewMessage} handleclicksend={handleclicksend}
+            <Chats selectedUser={selectedUser} contactsHistory ={contactsHistory} selectMessages={selectMessages} newMessage={newMessage} setNewMessage={setNewMessage} handleclicksend={handleclicksend}
             Online = { onlineUsers }
             />
 

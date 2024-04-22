@@ -15,19 +15,20 @@ function LoginForm(prop) {
   modalOpen, setModalOpen,
   email, setEmail,
   password, setPassword,
-  username1, setUserName,
+
   displayName, setDisplayName,
-  isLoggedIn, setLoggedIn,
+ 
   name, setName,
-  loginerror, setloginerror,
+  loginerror, 
   showDropdown, setShowDropdown,
   handleLogin, handleSignUp, handleLogout,
+   
 } = useContext(AuthContext);
 
 
-  //const [username1, setUserName] = useState('');
+const { login} = useSocketContext();
 
-  const { login, setLogin, setLogout } = useSocketContext()
+
   
 
   //controlling the behaviour of the modal 
@@ -37,7 +38,7 @@ const toggleDropdownFalse = () =>{setShowDropdown(false);}
 const handleClick = () => {setModalOpen(true);};
 const handleClose = () => {setModalOpen(false);};
 
-
+//console.log('login?', login)
   return (
     <div >
         {/* If user is not logged in activitate the modal using handleclick */}

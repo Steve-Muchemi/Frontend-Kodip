@@ -1,124 +1,87 @@
 
 import React, { useRef, memo, createContext, useContext, useEffect, useState } from 'react';
 
-import io from 'socket.io-client';
+import socket from './socket.js';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-
+import { AuthContext } from './AuthProvider.js';
 
 export const SocketContext = createContext();
 
 
 export const SocketProvider = ({children}) =>{
     const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
+    //const [newMessage, setNewMessage] = useState('');
     const [userName, setUserName] = useState('');
     const [users, setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState([]);
+    const [contactsHistory, setContactsHistory] = useState([]); //users with a chat history with a particular user
     const [email, setEmail] = useState('');
     const [password, setPassword] =useState('');
-    const [sentMessage, setSentMessage] = useState('');
+    //const [sentMessage, setSentMessage] = useState('');
+    const [usersmatching, setUsersMatching] = useState([]);
     const [chatHistory, setChatHistory] = useState([]);
     const [isMessageModalOpen, setMessageModalOpen] = useState(false);
     const [userfrompin ,SetUserFromPin] = useState([])
-    const [login ,setLogin] = useState(false)
-    const [logout ,setLogout] = useState(false)
-    
+    const [login, setLogin] = useState(false);
     const isFirstMount = useRef(true);
-    const serverURL = 'http://localhost:3002';
-    const socket = io(serverURL);
 
 
 
-console.log('when socket provider loads login:', login)
 
-useEffect(() => {
-  socket.on('connect', () => {
-    console.log('Socket.io connection established');
-    console.log('How does our localstorage look like?',localStorage)
-
-//Important: this is temporary, look into this later
-// maybe check if the token is valid before logging in the user again. 
-    if (login === true ) {
-      setEmail(localStorage.email);
-      setUserName(localStorage.username);
+useEffect(()=>{ 
   
-      const userobj = localStorage.userid;
+ 
+    socket.on('connect', () => {
+
+      console.log('Socket connected');
+      console.log('is this page running?', localStorage, login)
+        
+        if(login){ 
+          const userobj = {
+            email: localStorage.email,
+            username: localStorage.username,
+            userid: localStorage.userid,
+            profilepic: localStorage.profilepic,
+          };
+       
+         socket.emit('user login', userobj);
+          console.log("sent login details", userobj)
+        }
+       
+        });
       
-     /* {
-        email: localStorage.email,
-        username: localStorage.username,
-        userid: localStorage.userid,
-        profilepic: localStorage.profilepic,
-      };
-  */
-      socket.emit('user login', userobj);
-      console.log("we'll trigger login");
-  
+      },[])
+
+socket.on('online users', (users) => {
+  setOnlineUsers(users);
+ //console.log('online users recieved', users)
+  });
+
+
+  socket.on('contactsHistory', (contactsHistory) => {
+    // Check if contactsHistory is an object and not null or undefined
+    if (typeof contactsHistory === 'object' && contactsHistory !== null) {
+        //console.log('contactHistory received', contactsHistory);
+        // Handle contactsHistory as an object here
+        //const filteredContacts = contactsHistory.filter(contact=>contact !== null)
+        setContactsHistory(contactsHistory);
+    } else {
+        console.warn('contactsHistory is not an object or is null/undefined:', contactsHistory);
     }
-  });  
-}, []);
+});
 
 
 
 
-useEffect(()=>{
-//skip this on initial mount. only wait till login change
 
-if(isFirstMount.current){
-  isFirstMount.current = false;
-  return;
-}
-  
+socket.on('chatHistory', (messages)=>{
+    setMessages([...messages])
+    //console.log('chatHistory', messages)
+   
 
-  //trigger login event when the login token changes
-  if (login) {
-    setEmail(localStorage.email);
-    setUserName(localStorage.username);
-
-    const userobj = {
-      email: localStorage.email,
-      username: localStorage.username,
-      userid: localStorage.userid,
-      profilepic: localStorage.profilepic,
-    };
-
-    socket.emit('user login', userobj);
-    console.log("we'll trigger login");
-      } 
-  
-  if(!login){
-    socket.emit('logout', localStorage.userid)
-    console.log("we'll trigger logout", localStorage.userid );
-    localStorage.setItem('token', '')
-    localStorage.setItem('userid', '')
-    }
-    socket.on('online users', (users) => {
-    setOnlineUsers(users);
-   //console.log('online users recieved', users)
-    });
-    }, [login])
-
-
-    //chat History
-useEffect(()=>{
-console.log('selected usre is this one', selectedUser)
-socket.emit('askChatHistory', selectedUser.userid)
-
-}, [selectedUser])
-
-socket.on('getChatHistory', (history)=>{
-  console.log('history from get chat',history)
-})
-
-  
-
-
-    socket.on('chatHistory', (messages)=>{
-setMessages([...messages])
-
-    })
+  })
 
 
 
@@ -138,10 +101,6 @@ setMessages([...messages])
     setMessages((prevMessages) => [...prevMessages, newReceivedMessage]);
     console.log('Message received:', newReceivedMessage);
 
-    const unreadmessagesbadge = {
-      unread: 10, 
-      senderId: newReceivedMessage.sender
-    }
 
    //Letting the server know the message was received
     socket.emit('A new Message recieved', newReceivedMessage)
@@ -154,12 +113,9 @@ setMessages([...messages])
   //return function will run during unmounting to clean up the listener.
   
 
-
-
-
 //Handle notification for the messages we sent to a user
 socket.on('Your message was recieved', (newReceivedMessage)=>{
-  
+  console.log('Your message recieved', newReceivedMessage )
     setMessages(previousMessages=>{
 return  previousMessages.map(message=>{
    
@@ -215,7 +171,7 @@ const sendMessage = (userSelected, textMessage) => {
       
 
       
-      const  reciever = userSelected.userid; // this needs to be passed in
+      const  receiver = userSelected._id; // this needs to be passed in
       const  content = textMessage; // this needs to be passed in
       const messageid = uuidv4() //unique id for each message
 
@@ -225,14 +181,19 @@ const sendMessage = (userSelected, textMessage) => {
       } 
       
 
-      socket.emit('private message', {reciever, content, sender, status, messageid });
-      //console.log('reciever, message , sender', reciever, message, sender, status)
+      socket.emit('private message', {receiver, content, sender, status, messageid });
+      console.log('reciever, message , sender', receiver,content, sender, status)
      
-      setSentMessage(newMessage);
+      //setSentMessage(newMessage);
 
-      setNewMessage('');
+     // setNewMessage('');
+      //console.log('After calling send function', selectedUser, newMessage);
+      
+      setMessages(previousMessages=>{ return [...previousMessages, {receiver, content, sender, status, messageid } ] })
+
+      
     }
-  
+  console.log('all messages now', messages);
  };
 
 
@@ -267,33 +228,47 @@ console.log('how many time is messmodalfunction getting called/running', user.da
 }
 }
 
+
+
+const searchForUser = (usertosearch) =>{
+  socket.emit('search user', usertosearch)
+
+}
+
+socket.on('users matching search', (usersmatching)=>{
+  setUsersMatching([...usersmatching])
+})
+
+
 // Handling Notifications 
 
 
 
-
-
-
-
-
+/*
+function sendMessage(){}
+function readnotification(){}
+function searchForUser(){}
+*/
 
   const values = {
     messages, setMessages,
-    newMessage, setNewMessage,
+    //newMessage, setNewMessage,
     userName, setUserName,
     users, setUsers,
     selectedUser, setSelectedUser,
     onlineUsers, setOnlineUsers,
+    contactsHistory, setContactsHistory,
+    searchForUser, usersmatching,
     email, setEmail,
     password, setPassword,
-    sentMessage, setSentMessage,
+    //sentMessage, setSentMessage,
     chatHistory, setChatHistory,
     isMessageModalOpen, setMessageModalOpen,
     userfrompin ,SetUserFromPin,
     login, setLogin,
-    logout, setLogout,
     sendMessage,
-    readnotification
+    readnotification, 
+    socket
     }
 
     return (

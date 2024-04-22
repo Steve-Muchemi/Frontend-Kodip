@@ -10,7 +10,7 @@ const Map = ()=>{
   return (
     <div>
  
-  <SideBar/>
+ <SideBar/>
   <BingMap/>
 
     </div>

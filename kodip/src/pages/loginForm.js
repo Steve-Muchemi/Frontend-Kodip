@@ -119,7 +119,7 @@ function LoginForm(prop) {
 
   };
 
-
+  console.log('isLoggedIn?', isLoggedIn)
 const toggleDropdownTrue = () => {setShowDropdown(true);};
 
 const toggleDropdownFalse = () =>{setShowDropdown(false);}
