@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './connect.css'; // Import CSS file for styling
@@ -5,22 +6,47 @@ import { ReactBingmaps } from 'react-bingmaps';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import SideBar from '../MapPage_Components/sidebar/sidebar';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+
+
 
 const Connect = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [priceRange, setPriceRange] = useState('');
   const [amenities, setAmenities] = useState('');
   const [additionalInfo, setAdditionalInfo] = useState('');
+  const [title, setTitle ] = useState('');
   const [receiveOwnerContacts, setReceiveOwnerContacts] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form submitted');
-    console.log('Selected Location:', selectedLocation);
-    console.log('Price Range:', priceRange);
-    console.log('Amenities:', amenities);
-    console.log('Additional Info:', additionalInfo);
-    console.log('Receive Owner Contacts:', receiveOwnerContacts);
+
+
+  const whatToSubmit= {
+      postId: uuidv4(),
+      title:title,
+      location: selectedLocation,
+      amenities: amenities,
+      additionalInfo: additionalInfo,
+      rewardsCoins: true,
+      coins: 100,
+      user:localStorage.userid,
+      coordinates: [1,2],      
+      budget: priceRange,
+  
+    }
+
+    console.log('what to submit', whatToSubmit);
+
+    //axios call here to do the submission.
+    axios.post('http://localhost:3002/api/connect/createpost', whatToSubmit)
+    .then(response=>{
+    console.log(response.data)
+    })
+    .catch(error=>{
+    console.log(error);
+    })
   };
 
   const mapOptions = {
@@ -36,6 +62,13 @@ const Connect = () => {
           <h1>Discover Hidden Gems with Locals</h1>
           <form onSubmit={handleSubmit}>
             <div className="formGroup">
+
+            <div className="formGroup">
+              <label htmlFor="priceRange"> Title</label>
+              <input type="text" id="title" placeholder="What shoud the title of your post be?" value={title} onChange={(e) => setTitle(e.target.value)} />
+            </div>
+
+
               <label htmlFor="selectedLocation">Select Your Desired Location:</label>
 
               <div className="mapContainer" >
@@ -73,9 +106,9 @@ const Connect = () => {
       </div>
 
             </div>
-            <Link to="/connectpage" ><button type="submit" className="connectButton">Create Post</button>
+            <button type="submit" className="connectButton">Create Post</button>
            
-      </Link>
+      
 
       <Link to="/connectpage" ><button type="submit" className="connectButton" style={{marginLeft:'15px'}}>Checkout Similar Posts</button>
            
@@ -97,7 +130,7 @@ const Connect = () => {
           <p style={{ fontSize: '14px', fontStyle: 'italic', color: 'black', lineHeight: '1.5' }}> Its KodiSwift!</p>
           
 
-{/* Instructions */}
+
 <div style={{ border: '1px solid #ccc', padding: '20px', marginTop: '20px', fontFamily: 'cursive', color: '#777' }}>
   <h4 style={{ fontSize: '18px', marginBottom: '10px', fontFamily: 'cursive' }}>How it works</h4>
   <ol style={{ fontSize: '14px', lineHeight: '1.5', paddingLeft: '20px', textAlign: 'left' }}>

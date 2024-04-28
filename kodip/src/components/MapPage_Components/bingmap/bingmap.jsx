@@ -3,23 +3,126 @@ import { ReactBingmaps } from 'react-bingmaps';
 import axios from 'axios';
 import './mapfile.css';
 import './bingmap.css';
-import useOnSearch from "../../../hooks/useSearch";
 import PropertyForm from "../listproperty";
-
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import ReactDOMServer from 'react-dom/server';
+
+import useOnSearch from "../../../hooks/useSearch";
+import { useSocketContext } from '../../../hooks/useSocketContext.js';
+
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 
 function MapComponent() {
   const [infoboxLocation, setInfoboxLocation] = useState(null);
   const [infoboxVisible, setInfoboxVisible] = useState(false);
-  const [pushPins, setPushPins] = useState([]);
+  const [pushpins, setPushpins] = useState([]);
+
   const searchInputRef = useRef(null);
-  const {onSearch, setOnSearch} = useOnSearch()
+  const {onSearch, setOnSearch, postCoordinates, setPostCoordinates} = useOnSearch() // fix: new property context maybe
   const [clickLocation, setClickLocation] = useState(null); // Fix: useState should be a function
   const [postModal,setPostModal] = useState(false);
+  const { socket, selectedUser, setSelectedUser, openEnvelope, setOpenEnvelope } = useSocketContext();
+  const [setUsersMatching, usersmatching] = useState([]);
+
+  const navigate = useNavigate();
+ 
+const handleModalOpen = (pin) =>{
+  console.log('clicked the button message owner', pin.owner)
+  //set to open
+  //search for user
+  // set user as selected
+  socket.emit('search user', pin.owner)
+  
+}
+
+
+const handleViewPhotos = (pin) =>{
+  console.log('clicked handleviewphotos')
+  //how to navigate the user to the root /listings/1 when this function is called?
+  navigate(`/listings/1`);
+}
+
+
+
+useState(()=>{
+socket.on('users matching search', (usersmatching)=>{
+  console.log('usesmatching1', usersmatching)
+    //setUsersMatching([...usersmatching])
+    setSelectedUser(...usersmatching)
+    //open message modal
+    setOpenEnvelope(true)
+
+  })
+ 
+//set selected user as user matching
+//
+  
+}, [usersmatching])
+
+
+
+
+
+
+
+
+
+useState(()=>{
+axios.get('http://localhost:3002/api/property/get/all')
+  .then(response=>{
+      //console.log(response.data)
+     // setPushpins(response.data)
+  
+let a = [];
+    response.data.forEach((pin)=>{
+
+      a.push({
+        location: pin.pushpin.location,
+        addHandler: "click",
+        infoboxOption: { 
+          title: '',
+          description: `<div>
+            <img src="${pin.images[0]}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
+           
+          </div>`,
+
+         
+          actions: [{
+              label: 'Message',
+              eventHandler: () => handleModalOpen(pin),
+          }, {
+              label: 'View Photos',
+              eventHandler: ()=>{ handleViewPhotos(pin)},
+          }]
+          
+
+        },
+        pushPinOption: { color: 'black', title: pin.pushpin.infoboxOption.title },
+      }, )
+
+
+    }  )
+    
+
+    setPushpins(a)
+
+
+
+
+
+
+  })
+  .catch(error=>{
+      console.log(error);
+  })
+
+})
+  
+
+
 
   const mapOptions = {
     center: [-1.164194, 36.945139],
@@ -38,127 +141,10 @@ function MapComponent() {
   // Static pushpin data with infobox for Nairobi
   const image = 'https://images.unsplash.com/photo-1623298317883-6b70254edf31?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
   
-  const pushpins = [
+
+//pull pins from the database.
+
    
-    {
-      location: [-1.286389, 36.817223],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 1",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 1' },
-    },
-    
-    {
-      location: [-1.3032, 36.5671],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 3",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 3' },
-    },
-    {
-      location: [-1.3117, 36.8341],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 4",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 4' },
-    },
-    {
-      location: [-1.2769, 36.7965],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 5",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 5' },
-    },
-    {
-      location: [-1.2861, 36.8211],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 6",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 6' },
-    },
-    {
-      location: [-1.3187, 36.8282],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 7",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 7' },
-    },
-    {
-      location: [-1.2833, 36.8167],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 8",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 8' },
-    },
-    {
-      location: [-1.2632, 36.8326],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 9",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 9' },
-    },
-    {
-      location: [-1.2966, 36.8219],
-      addHandler: "click",
-      infoboxOption: { 
-        title: "Location 10",
-        description: `<div>
-          <img src="${image}" alt="Image Alt Text" class='infoboximage' style="max-width: 100%; height: auto;" />
-          <p>Message owners</p>
-          <p>View photos</p>
-        </div>`,
-      },
-      pushPinOption: { color: 'black', title: 'Location 10' },
-    },
-  ];
 
 
 
@@ -171,6 +157,7 @@ function MapComponent() {
     const holdTimer = setTimeout(() => {
       console.log('Hold click event triggered', { latitude, longitude });
       setClickLocation({ latitude, longitude });
+      setPostCoordinates([latitude, longitude])
       setPostModal(true)
     }, 1000); // Hold duration set to 2 seconds (2000 milliseconds)
   
@@ -244,8 +231,17 @@ function MapComponent() {
         style={{ width: "100%", height: "100%", position: 'absolute' }}
         
         getLocation={getLocation}
+
+        
+
+
+
+        
       />
 
+      
+
+{console.log(pushpins)}
 {postModal && (
         <div className="post-property-modal">
          

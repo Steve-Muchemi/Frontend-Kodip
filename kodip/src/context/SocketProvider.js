@@ -19,7 +19,7 @@ export const SocketProvider = ({children}) =>{
     const [contactsHistory, setContactsHistory] = useState([]); //users with a chat history with a particular user
     const [email, setEmail] = useState('');
     const [password, setPassword] =useState('');
-    //const [sentMessage, setSentMessage] = useState('');
+    const [openEnvelope, setOpenEnvelope ] = useState(false);
     const [usersmatching, setUsersMatching] = useState([]);
     const [chatHistory, setChatHistory] = useState([]);
     const [isMessageModalOpen, setMessageModalOpen] = useState(false);
@@ -251,6 +251,7 @@ function searchForUser(){}
 */
 
   const values = {
+    openEnvelope, setOpenEnvelope ,
     messages, setMessages,
     //newMessage, setNewMessage,
     userName, setUserName,

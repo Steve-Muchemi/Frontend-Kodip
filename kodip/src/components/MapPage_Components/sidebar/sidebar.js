@@ -12,8 +12,8 @@ import { useSocketContext } from '../../../hooks/useSocketContext.js';
 import { useLocation } from 'react-router-dom';
 
 const SideBar = () => {
-  const [openEnvelope, setOpenEnvelope] = useState(false);
-  const { onlineUsers, send, setMessages, messages, readnotification } = useSocketContext();
+  
+  const { onlineUsers, send, setMessages, messages, readnotification, openEnvelope, setOpenEnvelope } = useSocketContext();
   const locationPath = useLocation().pathname;
 
   //console.log('sidebar render');

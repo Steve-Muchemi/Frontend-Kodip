@@ -12,7 +12,7 @@ const PostList = ({ posts }) => {
           <p>Budget: {post.budget}</p>
           <p>Bedrooms: {post.bedrooms}</p>
           <p>Amenities: {post.amenities}</p>
-          {/* Display other post details */}
+          {/* Display other post details*/ }
         </div>
       ))}
     </div>

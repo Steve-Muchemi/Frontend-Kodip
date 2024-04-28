@@ -8,6 +8,7 @@ function Imageapp ({selected}) {
 
 
 	function openImage (selected) {
+
 		setSelectedImage(selected);
 
 	}
@@ -29,31 +30,25 @@ const closeModal = () => {
 
 
     <div className={styles.Modalimages}>
-        <img src={selected} alt={selected.title} className={styles.imagepop1} 
+        <img src={selected[0]} alt={selected.title} className={styles.imagepop1} 
 
-        onClick = {() => openImage(selected)}
+        onClick = {() => openImage(selected[0])}
 
         />
         <h4 className={styles.text}>Click for full-size image </h4>
 
 
         <div className={styles.imagepopgroup}>
-        <img src={selected} alt={selected.title} className={styles.imagepop2} onClick = {() => openImage(selected)}/>
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
-        <img src={selected} alt={selected.title} className={styles.imagepop2} />
+            {console.log('what is selected', selected)}
+
+        {
+            
+            selected.map((item, index)=>(
+                <img key={index} src={item} alt={`Image ${index + 1}`} className={styles.imagepop2} onClick = {() => openImage(selected[index])}/>
+            ))
+        }
+
+       
    </div>
 
    <Modal
@@ -62,7 +57,7 @@ const closeModal = () => {
     contentLabel = "image Modal"
     className= {styles.selectimageModal}
     >
-    <img src={selected} alt={selected.title} className={styles.selectmodal}/>
+    <img src={selectedImage} alt={selected.title} className={styles.selectmodal}/>
     <button className={styles.closeselected} onClick= {closeModal}> Close </button> 
 
     </Modal>

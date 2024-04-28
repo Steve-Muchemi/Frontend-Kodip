@@ -5,9 +5,13 @@ import Imageapp from './Imageapp';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import QRCode from 'qrcode.react';
 
 function PropertyListing({ listings }) {
   // State variables for managing selected image and its details
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImagePropertyName, setSelectedImagePropertyName] = useState('');
   const [selectedImagePropertyType, setSelectedImagePropertyType] = useState('');
@@ -16,12 +20,31 @@ function PropertyListing({ listings }) {
   const [selectedImagePropertyUrl, setSelectedImagePropertyUrl] = useState('');
   const [selectedImagePropertyAmenities, setselectedImagePropertyAmenities] = useState('');
   const [likedImages, setLikedImages] = useState([]);
+  const [propertylistings, setPropertylistings] = useState([])
+  const navigate = useNavigate();  
+  const {propertyId} = useParams()
+  const [currentPropertyId, setCurrentPropertyId] = useState(propertyId);
 
-  const position = [51.505, -0.09];
 
-  const openModal = (image) => {
-    setSelectedImage(image);
-  };
+
+
+
+  console.log('outofseff', propertyId, selectedImage)
+
+  useEffect(()=>{
+  axios.get(`http://localhost:3002/api/property/get/all`)
+    .then(response=>{
+    console.log(response.data)
+
+    setPropertylistings(response.data)
+    })
+    .catch(error=>{
+    console.log(error);
+    })
+
+  },[])
+ 
+  
 
   const handleLike = (index) => {
     const newLikedImages = [...likedImages];
@@ -29,13 +52,50 @@ function PropertyListing({ listings }) {
     setLikedImages(newLikedImages);
   };
 
+
   useEffect(() => {
+    // Find the selected property based on propertyId
+    console.log('useff', propertyId, selectedImage)
+    if (propertyId) {
+      const selectedProperty = propertylistings.find(property => property._id.toString() === propertyId)
+       if (selectedProperty) {
+        setSelectedImage(selectedProperty);
+        console.log('selected image changed in if propid', selectedImage)
+        } }
+
+    if(selectedImage){
+
+      const selectedProperty = propertylistings.find(property => property._id.toString() === selectedImage._id);
+
+      if (selectedProperty) {
+        setSelectedImage(selectedProperty);
+  
+        navigate(`/listings/${selectedProperty._id}`); // Update URL when opening modal
+      } else {
+        // Navigate back to listings if property not found
+       
+      }
+    }    
+  }, [selectedImage, navigate]);
+
+
+  const openModal = (listing) => {
+    setSelectedImage(listing);   
+    console.log('modal open1',listing) 
+    console.log('modal open',selectedImage) 
+  };
+  
+
+
+
+  useEffect(() => {
+    
     // Update the selected image details when the selectedImage state changes
     if (selectedImage) {
       setSelectedImagePropertyName(selectedImage.propertyName);
       setSelectedImagePropertyType(selectedImage.propertyType);
       setSelectedImagePropertyContact(selectedImage.contactInfo);
-      setSelectedImagePropertyUrl(selectedImage.imageUrls);
+      setSelectedImagePropertyUrl(selectedImage.images);
       setSelectedImagePropertyPrice(selectedImage.Price);
       setselectedImagePropertyAmenities(selectedImage.amenities);
       setSelectedImagePropertyContact(selectedImage.contactInfo);
@@ -44,191 +104,15 @@ function PropertyListing({ listings }) {
 
   const closeModal = () => {
     setSelectedImage(null);
+    navigate('/listings')
   };
 
 
-  const propertylistings = [
-    {
-      propertyType: 'House',
-      price: 250000,
-      description: 'Spacious family home with a beautiful garden.',
-      propertyName: 'Sunset Villa',
-      location: 'City A',
-      amenities: ['Swimming pool', 'Garden', 'Garage'],
-      contactInfo: ['John Doe', '123-456-7890'],
-      imageUrls: [
-        'https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?auto=compress&cs=tinysrgb&w=1600'
-      ]
-    },
-    {
-      propertyType: 'Apartment',
-      price: 150000,
-      description: 'Modern apartment in a prime location.',
-      propertyName: 'City View Apartments',
-      location: 'City B',
-      amenities: ['Gym', 'Security', 'Parking'],
-      contactInfo: ['Jane Smith', '987-654-3210'],
-      imageUrls: [
-        'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1600'
-      ]
-    },
-    {
-      propertyType: 'Villa',
-      price: 500000,
-      description: 'Luxurious villa with stunning views.',
-      propertyName: 'Mountain Oasis',
-      location: 'City C',
-      amenities: ['Jacuzzi', 'Terrace', 'Private garden'],
-      contactInfo: ['Alice Johnson', '555-123-4567'],
-      imageUrls: [
-        'https://images.pexels.com/photos/2360673/pexels-photo-2360673.jpeg?auto=compress&cs=tinysrgb&w=1600'
-      ]
-    },
-    {
-      propertyType: 'Condo',
-      price: 300000,
-      description: 'Elegant condo with panoramic city views.',
-      propertyName: 'Skyline Heights',
-      location: 'City D',
-      amenities: ['Concierge', 'Roof deck', 'Fitness center'],
-      contactInfo: ['Bob Williams', '111-222-3333'],
-      imageUrls: [
-        'https://images.pexels.com/photos/2816284/pexels-photo-2816284.jpeg?auto=compress&cs=tinysrgb&w=1600'
-      ]
-    } ,
-    {
-      propertyType: 'Condo',
-      price: 300000,
-      description: 'Elegant condo with panoramic city views.',
-      propertyName: 'Skyline Heights',
-      location: 'City D',
-      amenities: ['Concierge', 'Roof deck', 'Fitness center'],
-      contactInfo: ['Bob Williams', '111-222-3333'],
-      imageUrls: [
-        'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTR8fGhvbWV8ZW58MHx8MHx8fDA%3D'
-      ]
-    },
-    {
-        propertyType: 'House',
-        price: 250000,
-        description: 'Spacious family home with a beautiful garden.',
-        propertyName: 'Sunset Villa',
-        location: 'City A',
-        amenities: ['Swimming pool', 'Garden', 'Garage'],
-        contactInfo: ['John Doe', '123-456-7890'],
-        imageUrls: [
-          'https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      },
-      {
-        propertyType: 'Apartment',
-        price: 150000,
-        description: 'Modern apartment in a prime location.',
-        propertyName: 'City View Apartments',
-        location: 'City B',
-        amenities: ['Gym', 'Security', 'Parking'],
-        contactInfo: ['Jane Smith', '987-654-3210'],
-        imageUrls: [
-          'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      },
-      {
-        propertyType: 'Villa',
-        price: 500000,
-        description: 'Luxurious villa with stunning views.',
-        propertyName: 'Mountain Oasis',
-        location: 'City C',
-        amenities: ['Jacuzzi', 'Terrace', 'Private garden'],
-        contactInfo: ['Alice Johnson', '555-123-4567'],
-        imageUrls: [
-          'https://images.pexels.com/photos/2360673/pexels-photo-2360673.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      },
-      {
-        propertyType: 'Condo',
-        price: 300000,
-        description: 'Elegant condo with panoramic city views.',
-        propertyName: 'Skyline Heights',
-        location: 'City D',
-        amenities: ['Concierge', 'Roof deck', 'Fitness center'],
-        contactInfo: ['Bob Williams', '111-222-3333'],
-        imageUrls: [
-          'https://images.pexels.com/photos/2816284/pexels-photo-2816284.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      } ,
-      {
-        propertyType: 'Condo',
-        price: 300000,
-        description: 'Elegant condo with panoramic city views.',
-        propertyName: 'Skyline Heights',
-        location: 'City D',
-        amenities: ['Concierge', 'Roof deck', 'Fitness center'],
-        contactInfo: ['Bob Williams', '111-222-3333'],
-        imageUrls: [
-          'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTR8fGhvbWV8ZW58MHx8MHx8fDA%3D'
-        ]
-      },
-      {
-        propertyType: 'House',
-        price: 250000,
-        description: 'Spacious family home with a beautiful garden.',
-        propertyName: 'Sunset Villa',
-        location: 'City A',
-        amenities: ['Swimming pool', 'Garden', 'Garage'],
-        contactInfo: ['John Doe', '123-456-7890'],
-        imageUrls: [
-          'https://images.pexels.com/photos/1029599/pexels-photo-1029599.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      },
-      {
-        propertyType: 'Apartment',
-        price: 150000,
-        description: 'Modern apartment in a prime location.',
-        propertyName: 'City View Apartments',
-        location: 'City B',
-        amenities: ['Gym', 'Security', 'Parking'],
-        contactInfo: ['Jane Smith', '987-654-3210'],
-        imageUrls: [
-          'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      },
-      {
-        propertyType: 'Villa',
-        price: 500000,
-        description: 'Luxurious villa with stunning views.',
-        propertyName: 'Mountain Oasis',
-        location: 'City C',
-        amenities: ['Jacuzzi', 'Terrace', 'Private garden'],
-        contactInfo: ['Alice Johnson', '555-123-4567'],
-        imageUrls: [
-          'https://images.pexels.com/photos/2360673/pexels-photo-2360673.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      },
-      {
-        propertyType: 'Condo',
-        price: 300000,
-        description: 'Elegant condo with panoramic city views.',
-        propertyName: 'Skyline Heights',
-        location: 'City D',
-        amenities: ['Concierge', 'Roof deck', 'Fitness center'],
-        contactInfo: ['Bob Williams', '111-222-3333'],
-        imageUrls: [
-          'https://images.pexels.com/photos/2816284/pexels-photo-2816284.jpeg?auto=compress&cs=tinysrgb&w=1600'
-        ]
-      } ,
-      {
-        propertyType: 'Condo',
-        price: 300000,
-        description: 'Elegant condo with panoramic city views.',
-        propertyName: 'Skyline Heights',
-        location: 'City D',
-        amenities: ['Concierge', 'Roof deck', 'Fitness center'],
-        contactInfo: ['Bob Williams', '111-222-3333'],
-        imageUrls: [
-          'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OTR8fGhvbWV8ZW58MHx8MHx8fDA%3D'
-        ]
-      }
-  ];
+  
+
+
+
+
 
 
 
@@ -243,7 +127,7 @@ function PropertyListing({ listings }) {
       //console.log("image urls look like this", listing.imageUrls[0])
     }
     <img
-      src={listing.imageUrls[0]}
+      src={listing.images[0]}
       alt={listing.title}
       className='listingImage'
       onClick={() => openModal(listing)}
@@ -277,8 +161,8 @@ function PropertyListing({ listings }) {
               <img className='UserImage' src={selectedImagePropertyUrl} />
               <button className='closeselected' onClick= {closeModal}> close </button>
             </div>
-
-            <Imageapp selected = {selectedImagePropertyUrl} />
+            
+            <Imageapp selected = {selectedImage.images} />
 
 
             {/* <div className={styles.Modalimages}>
@@ -314,9 +198,14 @@ function PropertyListing({ listings }) {
               {/* Render selected image's contact information */}
               <p>Phone Number: {selectedImagePropertyContact[0]}</p>
               <p>Email: {selectedImagePropertyContact[1]}</p>
+                {/* QR Code */}
+      <div className="qr-code-container">
+        <QRCode value="https://www.example.com" size={128} />
+      </div>
             </div>
             <div className='ModalUsercomments'>
               <h3>More features coming :) </h3>
+              
              
             </div>
           </div>

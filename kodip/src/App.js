@@ -9,8 +9,11 @@ import ListProperty from "./components/MapPage_Components/listproperty";
 import Profile from "./pages/profileSettings";
 import Manage from "./pages/PropertyManagement";
 import Connect from "./components/ConnectPage/connect"
-import PostListPage from "./components/ConnectPage/PostListPage";
-import PostDetailsPage from "./components/ConnectPage/PostDetailsPage";
+import PostListPage from "./components/ConnectPage/listpage";
+import PostDetailsPage from "./components/ConnectPage/moredetails";
+
+import PropertyListing from "./components/Listings/PropertyListings"; // Import the PropertyListing component
+
 
 function App(){
 
@@ -26,7 +29,7 @@ function App(){
           <Route index element={<LandingPage />} />
           <Route path="map" element={<Map/>}/>
           <Route path="listings" element={<Listings/>}/>
-
+          <Route path="listings/:propertyId" element={<PropertyListing />} /> {/* Route for individual property listing */}
           
           <Route path= "listhouse" element={<ListProperty/>}/>
           <Route path= "profile" element={<Profile/>}/>

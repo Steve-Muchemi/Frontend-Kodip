@@ -1,22 +1,81 @@
+
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage, faCoins } from '@fortawesome/free-solid-svg-icons';
 import './styles.css';
-
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const CommentForm = ({ postId }) => {
   const [comment, setComment] = useState('');
   const [image, setImage] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
+
+console.log(localStorage)
+
+  const getuserslocation = () => {
+  
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({ latitude, longitude });
+         // console.log('got ', latitude, longitude)
+        },
+        (err) => {
+          console.error("Error getting GPS location:", err);
+          setError("Error getting GPS location");
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by this browser.");
+    }
+  };
+
+  
 
   const handleSubmit = (e) => {
+    getuserslocation();
     e.preventDefault();
-    // Submit comment logic
+    
+    // Get user's location
+    
+
+    const saveComment = {
+      commentId: uuidv4(), 
+      postId: postId,
+      replyTo: null,
+      text: comment,
+      username: localStorage.username,
+      timestamp: 'Just now',
+      reactions: { like: 0, superReact: 0 },
+      userId: localStorage.userid,
+      location: location,
+    };
+
+    console.log(saveComment);
+    
+    /// axios call here.
+
+    axios.post('http://localhost:3002/api/connect/comment', saveComment)
+    .then(response=>{
+    console.log(response.data)
+    })
+    .catch(error=>{
+    console.log(error);
+    })
+
+    
+
     console.log(`Comment submitted for post ${postId}: ${comment}`);
+    
     // Clear comment and image fields after submission
     setComment('');
     setImage(null);
     setSubmitted(true);
+    
     // Animate coin icon to indicate earning coins
     setTimeout(() => setSubmitted(false), 2000); // Reset animation after 2 seconds
   };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './PropertyForm.css';
+import useOnSearch from "./../../hooks/useSearch";
 
 const PropertyForm = () => {
   const [propertyType, setPropertyType] = useState('');
@@ -18,19 +19,37 @@ const PropertyForm = () => {
   const [measurement, setMeasurement] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
+  const {postCoordinates, setPostCoordinates} = useOnSearch()
+  const [pushpin, setPushpin] = useState({});
 
+useState(()=>{ 
+  setPushpin( {
+      location : postCoordinates,
+      infoboxOption: {
+        title: '',
+        description: '',
+        propertyType: '',
+      },
+      
+    })
+}, [postCoordinates])
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(price, 'price')//this is showing the price of 3000 
+    console.log(pushpin, 'pushpin')//this is showing the price of 3000 
+    
+
+    
     
     const formData = new FormData();
+    formData.append('owner', localStorage.userid);
     formData.append('propertyType', propertyType);
     formData.append('price', price);
     formData.append('bedrooms', bedrooms);
     formData.append('bathrooms', bathrooms);
     formData.append('measurement', measurement);
     formData.append('description', description);
+    formData.append('pushpin', pushpin);
     images.forEach((image) => {
       formData.append('images', image);
     });
@@ -67,6 +86,7 @@ const PropertyForm = () => {
     setBathrooms('');
     setMeasurement('');
     setDescription('');
+    setPushpin('');
     
   };
 
@@ -95,10 +115,16 @@ const PropertyForm = () => {
 
   }
 
+/*
 
-
-
-
+  pushpin: {
+    location: [Number, Number], // Latitude and longitude
+    infoboxOption: {
+      title: String,
+      description: String,
+      propertyType: String,
+    },
+*/
 
   return (
     <div className="property-form-container">

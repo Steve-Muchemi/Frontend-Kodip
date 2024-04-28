@@ -11,16 +11,17 @@
 
   .message-app {
 
-background-color: rgba(161, 208, 247, 0.685);
+background-color: #e5f1ff;
 left: 100px;
 z-index: 4;
 position: absolute;
-border-radius: 0px;
+border-radius: 30px;
 top: 120px;
 display:flex;
 
 width: 800px;
 height: 600px;
+box-shadow: 9px 8px 3px rgba(0, 0, 0, 0.1);
   }
 
   @media only screen and (max-width: 1400px) {

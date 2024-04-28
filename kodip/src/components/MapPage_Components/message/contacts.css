@@ -13,13 +13,13 @@
      
      height:15%;
      flex-direction: column;
-     margin-top: 20%;
+    
      
      }
    
      .search_contacts{
        
-       background-color: lightgreen;
+       background-color: white;
        height: 150%;
        border-radius: 10px;
        border-color: #add8e62b;
@@ -28,19 +28,21 @@
    
      .notifications{
      color: black;
-     font-size: larger;
+     font-size: large;
      font-weight: bold;
+     padding-left: 10px;
+    font-family: Lexend;
      
    }
    
      .contacts {
-     background-color: lightgreen;
+     background-color: white;
     
      display: flex;
      border-radius: 15px;
      margin: 10px;
      overflow: hidden;
-     height: 70%;
+     height: 80%;
    
      
    
@@ -109,6 +111,7 @@
      
      h4 {
        margin: 0;
+       color:#535151;
      }
     
    

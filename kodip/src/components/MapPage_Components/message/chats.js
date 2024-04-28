@@ -71,7 +71,7 @@ function Chats({
 // Render user's sent messages
 const renderUserMessage = (message, index) => (
   <div key={index} className="user-message">
-    <img src={localStorage.profilepic} alt={localStorage.username} className="profile-pix" />
+   
     <div className='message&timestamp'>
       <div className='message'>{message.content}</div>
       <div className='timestamp-doubleticks'>
@@ -89,7 +89,7 @@ const renderReceivedMessage = (message, index, contactsHistory) => {
   if (contactUser) {
     return (
       <div className='sender-message' key={message._id}>
-        <img src={contactUser.profilepic} alt={contactUser.username} className="profile-pix" />
+        
         <div className='message'>{message.content}</div>
         <div className='timestamp'>{message.timestamp}</div>
       </div>

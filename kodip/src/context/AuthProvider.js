@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
@@ -6,9 +7,11 @@ import { useSocketContext } from '../hooks/useSocketContext.js';
 
 export const AuthContext = createContext()
 
-
+console.log('auth render')
 export const AuthProvider = ({children}) => {
 
+
+ 
   const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +22,10 @@ export const AuthProvider = ({children}) => {
   const [loginerror, setloginerror] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
 
+  
   const { socket, login, setLogin } = useSocketContext();
+
+
 /**
  * Set up cookies and mananage the auth token with cookies
  * 
@@ -28,8 +34,8 @@ export const AuthProvider = ({children}) => {
 /** manage loged in states even during reloads.
  * This is temporary. we will use cookies to track and manage the token 
  * and ensure it is still valid before setting the login variable to true.
- */
-
+ 
+*/
 useEffect(()=>{
   console.log('localStorage looks like this', localStorage.token);
 if (localStorage.token){
@@ -198,8 +204,7 @@ if (localStorage.token){
       {children}
     </AuthContext.Provider>
   );
-
+  
 }
-
 
 

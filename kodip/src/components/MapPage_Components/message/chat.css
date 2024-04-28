@@ -8,14 +8,14 @@
   
   display: flex;
       flex-direction: column;
-      background-color: lightgreen;
+      background-color: white;
       padding-right: 10px;
       margin: 10px;
       margin-left: 0px;
       height: 15%;
       align-items: center;
       border-radius: 14px;
-      margin-top: 10%;
+      
   
   
   
@@ -27,6 +27,7 @@
     width: 100%;
     align-items: center;
     display: inline-flex;
+    color:#5d5b5b;
   
   }
   
@@ -36,11 +37,11 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: lightgreen;
+    background-color: white;
     padding-right: 10px;
     margin: 10px;
     margin-left: 0px;
-    height: 70%;
+    height: 80%;
     border-radius: 14px;
       
     }
@@ -85,27 +86,35 @@
     }
     .message{
       margin:10px;
-      color:green;
+      color:black;
     }
   
     .user-message {
       display: flex;
-      flex-direction: row-reverse; /* Align user messages to the right */
-      background-color: #e0ffff96;
+      flex-direction: row; /* Align user messages to the right */
+      background-color: #d9fdd3;
       border-radius: 15px;
       padding: 13px; /* Add padding for better appearance */
-      max-width: 90%; /* Adjust maximum width for responsiveness */
+      max-width: 70%; /* Adjust maximum width for responsiveness */
       word-wrap: break-word; /* Allow long words to break into the next line */
-      position:relative
+      position:relative;
+      margin:4px;
+      margin-left:28%;
     }
     
     .sender-message {
       display: flex;
-      background: lightgoldenrodyellow;
+      background: #00bffd21;
       border-radius: 15px;
+    
       padding: 10px; /* Add padding for better appearance */
-      max-width: 90%; /* Adjust maximum width for responsiveness */
+      max-width: 70%; /* Adjust maximum width for responsiveness */
       word-wrap: break-word; /* Allow long words to break into the next line */
+      margin:4px;
+      margin-left: 10px;
+      flex-direction: column;
+
+      
     }
   .profile-pic {
     left: 100%;
@@ -124,8 +133,11 @@
     top: 24%;
   }
   .message .timestamp {
-    flex-direction: column;
-      display: flex;
+    color: #888;
+    font-size: 12px;
+    flex-direction: row-reverse;
+    display: flex;
+
   
   }
   .timestamp-doubleticks{
@@ -156,8 +168,4 @@
     color:blue
   }
   
-  .message_input{
-  height:36px;
-  height: 35px;
-      margin: 10px;
-  }
+ 

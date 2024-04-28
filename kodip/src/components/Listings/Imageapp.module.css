@@ -52,8 +52,10 @@
     transform: translate(-50%, -50%);
     max-width: 90%;
     max-height: 90%;
-    overflow: auto;
+    top: 108px;
+    left: 125px;
     box-shadow: 0px 0px 100px skyblue, inset 0px 0px 10px skyblue;
+
   
   }
   
@@ -89,3 +91,15 @@
   }
   
   
+  .selectimageModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+  }
+  
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+

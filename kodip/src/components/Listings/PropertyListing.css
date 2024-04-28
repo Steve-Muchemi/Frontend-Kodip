@@ -8,7 +8,9 @@
   position: relative;
   top: 10vh;
   margin: 150px;
-  width:75vw
+  width:75vw;
+  background-color: rgb(246 249 252 / 0%);
+
   
   }
   
@@ -18,9 +20,9 @@
     border: none;
     border-radius: 10px;
     box-shadow: 0 2px 18px rgba(0, 0, 0, 0.1);
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255 255 255 / 23%);
     max-width: 350px;
-    position:relative;
+    position: relative;
   
   }
   
