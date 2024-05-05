@@ -57,11 +57,14 @@ const SideBar = () => {
 
           </Link>
 
+          
           <Link to="/connect"> 
           <FontAwesomeIcon 
           icon={faTowerBroadcast }         
           className={`icons ${locationPath == '/connect' ? 'active' : ''}`} 
           /> </Link>
+
+          
           
         </div>     
       </div>
@@ -71,3 +74,11 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+/*
+<Link to="/connect"> 
+          <FontAwesomeIcon 
+          icon={faTowerBroadcast }         
+          className={`icons ${locationPath == '/connect' ? 'active' : ''}`} 
+          /> </Link>
+*/

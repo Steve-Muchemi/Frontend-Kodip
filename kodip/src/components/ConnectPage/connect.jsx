@@ -8,6 +8,7 @@ import { faMapMarkerAlt, faCoffee } from '@fortawesome/free-solid-svg-icons';
 import SideBar from '../MapPage_Components/sidebar/sidebar';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import Confirm from './confirm';
 
 
 
@@ -18,6 +19,23 @@ const Connect = () => {
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [title, setTitle ] = useState('');
   const [receiveOwnerContacts, setReceiveOwnerContacts] = useState(false);
+
+
+
+ const [clickLocation, setClickLocation] = useState('') 
+ const [postCoordinates, setPostCoordinates] = useState([])
+  
+
+  const [postModal, setPostModal] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+
+
+  const handleConfirm = (confirm) => {
+    setConfirmation(confirm);
+    setPostModal(false); // Close the modal regardless of confirmation
+  };
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,6 +67,35 @@ const Connect = () => {
     })
   };
 
+
+
+
+  const handleMouseDown = (e) => {
+    const latitude = e.latitude;
+    const longitude = e.longitude;
+  
+    const holdTimer = setTimeout(() => {
+      console.log('Hold click event triggered', { latitude, longitude });
+      setClickLocation({ latitude, longitude });
+      setPostCoordinates([latitude, longitude])
+      setPostModal(true)
+    }, 1000); // Hold duration set to 2 seconds (2000 milliseconds)
+  
+    const handleMouseUp = () => {
+      clearTimeout(holdTimer);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+  
+  const getLocation = {
+    addHandler: 'mousedown',
+    callback: handleMouseDown
+  };
+
+
+
   const mapOptions = {
     center: [-1.164194, 36.945139],
     credentials: "AimaoVvThYG5kUK8jG8Gya7X7Q1lHKXk54RztUw2UNUGJR9Bbkna4DDkYqOWeHjv",
@@ -69,10 +116,19 @@ const Connect = () => {
             </div>
 
 
-              <label htmlFor="selectedLocation">Select Your Desired Location:</label>
+              <label htmlFor="selectedLocation">PinPoint where youd like to rent on the map:</label>
 
               <div className="mapContainer" >
-          <ReactBingmaps bingmapKey={mapOptions.credentials} center={mapOptions.center}  />
+          <ReactBingmaps bingmapKey={mapOptions.credentials} center={mapOptions.center}  getLocation={getLocation}/>
+
+          {postModal && (
+        <div className="post-property-modal">
+          <Confirm confirmation={confirmation} onConfirm={handleConfirm} />
+       
+        </div>
+      )}
+
+
         </div>
               <div className="locationInput">
                 <input type="text" id="selectedLocation" placeholder="Or manually type in the desired location" value={selectedLocation} onChange={(e) => setSelectedLocation(e.target.value)} />

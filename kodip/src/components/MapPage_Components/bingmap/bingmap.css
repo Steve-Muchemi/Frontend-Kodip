@@ -60,14 +60,19 @@ top: 50vh !important
 .close-propertyform{
 
 
-float: right;
-font-size: 45px;
-font-weight: bold;
-cursor: pointer;
-top: 51px;
-position: relative;
-z-index: 1;
-right: 10px;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  right: 10px;
+  background-color: #80808030;
+  border-radius: 10px;
+  width: 34px;
+  display: flex;
+  justify-content: center;
+
 }
 
 .custom-icon {

@@ -1,0 +1,25 @@
+.BingMapPin{
+    height: 300px;
+    width: 300px;
+    position: absolute;
+}
+
+.property-on-maps-button {
+    position: absolute;
+    top: 260px; /* Adjust top position as needed */
+    bottom:0px;
+    background-color: #000;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    z-index: 100; /* Ensure the button is above the map */
+    width:100%
+  }
+  
+  .property-on-maps-button:hover {
+    background-color: #0056b3;
+  }
+  

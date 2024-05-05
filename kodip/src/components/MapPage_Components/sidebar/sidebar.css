@@ -1,14 +1,14 @@
 .sidebar{
     z-index: 3;
     position: fixed;
-    background-color: beige;
+    background-color: white;
     width: 60px;
     left: 40px;
     top: 20vh;
     border-radius: 20px;
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 
 }
 .allIcons{
@@ -29,11 +29,11 @@
 
 .icons{
     font-size: 26px;
-      color: #10B981;
+      color:black; 
       
   }
 .icons.active {
-    color: #a6ff00;
+    color: #87cefa;
 
 }
 

@@ -1,5 +1,5 @@
 .house-type-bar {
-    display: flex;
+    display: none;
     justify-content: space-around;
     align-items: center;
     padding: 10px;
@@ -31,5 +31,42 @@
     .house-type-bar {
       flex-wrap: wrap;
     }
+  }
+  
+
+  .house-type-bar {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .house-type-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .house-type-icon:hover {
+    transform: translateY(-3px);
+  }
+  
+  .house-type-icon.selected {
+    background-color: #f0f0f0;
+  }
+  
+  .house-type-icon svg {
+    font-size: 24px;
+  }
+  
+  .house-type-icon span {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
   }
   

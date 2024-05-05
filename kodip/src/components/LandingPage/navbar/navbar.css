@@ -1,24 +1,59 @@
 
+.logo-search{
+    
+    width: fit-content;
+    display: flex;
+
+
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 70%;
+    margin-left: 5px;
+}
+.navi-bar{
+    display: flex;
+    flex-direction: column;
+   top:13px;
+   position:absolute;
+    z-index:3;
+}
 .nav-bar{
-    position: absolute;
+    position: fixed;
     width: 90%;
-    left: 7.5%;
+    left: 2.5%;
     /* border: 1px solid red; */
     padding: 10px 0;
     display: flex;
-    gap: 40%;
+   
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     z-index: 2;
     /* border: 1px solid purple; */
+}
+.options{
+    top:65px;
+    position:fixed;
+
+    width: 100%;
+
 }
 .mobile-nav{
     display: none;
 }
 .nav-links{
     display: flex;
-    /* border: 1px solid red; */
-    gap: 50px;
+    flex-direction: row;
+    
+    justify-content: flex-end;
+    width: 40%;
+}
+.btn-links{
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: space-between;
+    width: 300px;
+    
 }
 .nav-links ul{
     list-style: none;

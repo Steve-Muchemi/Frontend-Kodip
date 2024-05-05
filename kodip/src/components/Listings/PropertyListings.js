@@ -8,9 +8,51 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import QRCode from 'qrcode.react';
+import BingMapPin from './BingMapPin';
+
+
+//import { faSwimmingPool, faWifi, faParking, faHome, faBath, faHotTub, faUtensils, faTv, faCouch, faWrench, faDoorOpen, faRunning, faBed, faChair, faDumbbell, faLeaf } from '@fortawesome/free-solid-svg-icons';
+
+import { 
+  faSwimmingPool, 
+  faWifi, 
+  faParking, 
+  faHome, 
+  faBath, 
+  faHotTub, 
+  faUtensils, 
+  faTv, 
+  faCouch, 
+  faWrench, 
+  faDoorOpen, 
+  faRunning, 
+  faBed, 
+  faChair, 
+  faDumbbell, 
+  faLeaf,
+  faBolt,
+  faUserFriends,
+  faTree,
+  faWater,
+  faShieldAlt,
+  faArrowUp,
+  faDog,
+  faTshirt,
+  faWheelchair,
+  faPeopleArrows,
+  faTools,
+  faLightbulb,
+  faSlideshare,
+  faSnowflake
+} from '@fortawesome/free-solid-svg-icons';
+
+
+
 
 function PropertyListing({ listings }) {
   // State variables for managing selected image and its details
+
+  
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImagePropertyName, setSelectedImagePropertyName] = useState('');
@@ -110,6 +152,57 @@ function PropertyListing({ listings }) {
 
   
 
+const amenityIcons = {
+  Aircon: faSnowflake,
+  "Backup Generator": faBolt,
+  Balcony: faBolt,
+  Gym: faDumbbell,
+  Parking: faParking,
+  "Staff Quarters": faUserFriends,
+  Garden: faTree,
+  "Swimming Pool": faSwimmingPool,
+  Borehole: faWater,
+  Furnished: faCouch,
+  "High-speed Internet/Wi-Fi": faWifi,
+  "Security System": faShieldAlt,
+  "Elevator/Lift": faArrowUp,
+  "Pet-friendly Policies": faDog,
+  "Laundry Facilities": faTshirt,
+  "Wheelchair Accessibility": faWheelchair,
+  "Community/Recreation Room": faPeopleArrows,
+  "On-site Maintenance": faTools,
+  "Smart Home Features": faLightbulb,
+  Playground: faTools,
+};
+
+
+
+const RenderAmenities = ({ amenities }) => {
+  return (
+    <div className="amenities">
+      {amenities.map((amenity, index) => (
+        <div key={index} className="amenity-item">
+          <FontAwesomeIcon icon={amenityIcons[amenity]} />
+          <span className="amenity-label">{amenity}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+
+
+
+const amenitiesList = [
+  "Aircon",
+  "Backup Generator",
+  "Balcony",
+  "Gym",
+  "Parking",
+  "Staff Quarters",
+  "Garden",
+  "Swimming Pool",
+  "Borehole"];
 
 
 
@@ -120,7 +213,7 @@ function PropertyListing({ listings }) {
   return (
     <div className='PropertyListingCss'>
         
-      {/* Render the property listings */}
+   <div className='render-listings'> 
       {propertylistings.map((listing, index) => (
   <div key={index} className='listingCard'>
     {
@@ -148,6 +241,8 @@ function PropertyListing({ listings }) {
   </div>
 ))}
 
+ </div>
+
       <Modal
         isOpen={selectedImage !== null}
         onRequestClose={closeModal}
@@ -163,48 +258,73 @@ function PropertyListing({ listings }) {
             </div>
             
             <Imageapp selected = {selectedImage.images} />
-
-
-            {/* <div className={styles.Modalimages}>
-              <img src={selectedImagePropertyUrl} alt={selectedImage.title} className={styles.imagepop1} />
-              <div className={styles.imagepopgroup}>
-                <img src={selectedImagePropertyUrl} alt={selectedImage.title} className={styles.imagepop2} />
-                <img src={selectedImagePropertyUrl} alt={selectedImage.title} className={styles.imagepop2} />
-              </div>
-            </div>
-             */}
             <div className='ModalDescription'>
               <div className='ModalDescriptionbox'>
-                <h3 className='description'>Description</h3>
-                <p>{selectedImage.description}</p>
-                <h3>Amenities</h3>
-                {/* Render selected image's amenities */}
-                <p>{selectedImagePropertyAmenities[0]}</p>
-                <p>{selectedImagePropertyAmenities[1]}</p>
-                <p>{selectedImagePropertyAmenities[2]}</p>
-                <p>{selectedImagePropertyAmenities[3]}</p>
-                <p>{selectedImagePropertyAmenities[4]}</p>
-                <p>{selectedImagePropertyAmenities[5]}</p>
-                <h3>Price</h3>
-                <p>${selectedImage.price}</p>
+
+              <div className='propertyprice'>ksh {selectedImage.price}/mo</div>
+             <br/>
+             <br/>
+
+              <div className="amenities">
+                
+              <RenderAmenities amenities={amenitiesList} />;
+</div>
+
+
+
+              <hr></hr>
+
+                <h3 className='description'>Property details</h3>
+                
+                
+                 <p>{selectedImage.description}</p>
+               
+                
               </div>
               <div className='ModalMap'>
                 <p>Map</p>
                 {/* MapContainer and related components are currently commented out */}
+                <BingMapPin coordinates={selectedImage.pushpin.location}/>
+
               </div>
             </div>
-            <div className='ModalDescriptioncontact'>
-              <h3>Contact</h3>
-              {/* Render selected image's contact information */}
-              <p>Phone Number: {selectedImagePropertyContact[0]}</p>
-              <p>Email: {selectedImagePropertyContact[1]}</p>
-                {/* QR Code */}
-      <div className="qr-code-container">
-        <QRCode value="https://www.example.com" size={128} />
+            <h3>Similar houses</h3>
+            <div className='similar'>
+              
+              
+
+
+
+
+              {propertylistings.slice(2,5).map((listing, index) => (
+  <div key={index} className='listingCard'>
+    {
+      //console.log("image urls look like this", listing.imageUrls[0])
+    }
+    <img
+      src={listing.images[0]}
+      alt={listing.title}
+      className='listingImage'
+      onClick={() => openModal(listing)}
+    />
+    
+    <div key={index} className='heart-icon' onClick={() => handleLike(index)}>
+      <FontAwesomeIcon icon={faHeart} color={likedImages[index] ? 'red' : 'grey'} />
+    </div>
+    
+    <div className='listingImagedescription'>
+      <p>{listing.propertyName}</p>
+      
+      <div className='listingImagedescriptioncity'>
+        <p>{listing.location}</p>
+        <p>ksh {listing.price}</p>
       </div>
-            </div>
-            <div className='ModalUsercomments'>
-              <h3>More features coming :) </h3>
+    </div>
+  </div>
+))}
+
+
+
               
              
             </div>

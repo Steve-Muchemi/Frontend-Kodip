@@ -1,0 +1,52 @@
+/* LoginPage.css */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+.box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 4px;
+}
+
+.login-button {
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-family: serif;
+    padding-left: 2px;
+    margin: 10px;
+}
+
+.signup-button {
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-family: serif;
+    padding-left: 2px;
+    margin: 10px;
+}
+
+.icon {
+    margin-right: 8px;
+}

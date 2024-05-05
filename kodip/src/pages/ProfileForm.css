@@ -4,7 +4,10 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #07fc0b13;
-  position:relative
+  position:relative;
+  display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profilepic-name {
@@ -53,9 +56,7 @@ label {
   margin-bottom: 10px;
 }
 
-input[type='text'],
-input[type='email'],
-input[type='tel'] {
+.findname{
   
   padding: 8px;
   border: 1px solid #ccc;
@@ -73,7 +74,7 @@ input[type='file'] {
   max-width: 100%;
 }
 
-button[type='submit'] {
+button{
   background-color: #007bff;
   color: white;
   padding: 12px 24px;
@@ -94,4 +95,8 @@ button[type='submit']:hover {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+}
+
+.profile-form{
+  margin-top:20px;
 }

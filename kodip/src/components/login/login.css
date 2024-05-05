@@ -47,7 +47,7 @@
   height: 40%;
   padding: 20px;
   padding-bottom: 0px;
-  background-color: #f0f0f0;
+  background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(17, 194, 120, 0.5);
   position: relative;
@@ -90,7 +90,7 @@
     z-index: 2;
 }
 
-.nav-button-style {
+.n {
  min-width: 80px;
   padding: 10px;
   margin-bottom: 10px;
@@ -119,11 +119,11 @@
 }
 
 
-.button {
-  width: 100%;
+.login-button {
+  
   padding: 10px;
   margin-bottom: 10px;
-  background-color: #007bff;
+  background-color: black;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -131,7 +131,7 @@
   position: relative;
   z-index: 2;
 
-  top:50px;
+  
 }
 
 .button:hover {
@@ -146,7 +146,7 @@ button:focus,
 input:focus {
   outline: none;
 }
-.text {
+.tet {
   margin-top: 6px;
   color: rgb(0, 3, 12);
   background-color: #55efa0;
@@ -157,9 +157,33 @@ input:focus {
   position: relative;
   left: 0px;
   z-index: 3;
+
+
+
+
+ 
+   
+}
+
+
+.login-btn-text{
+   background-color: black;
+    color: white !important;
+  
+    font-family: serif;
+    height:40px;
+    width:106px;
+    
+}
+
+.btn-text{
+  color: white; /* Set the color to inherit from the parent */
+  text-decoration: none !important; /* Remove the underline */
+  font-family:serif;
+  font-size:15px;
 }
 .text:hover {
-  background-color: rgba(5, 255, 26, 0.774);
+  background-color: rgba(71, 77, 71, 0.774);
   transform: scale(1.05);
 }
 
@@ -194,5 +218,14 @@ input:focus {
 
 
 
-
+.login-profile-icon{
+padding-left:6px !important;
+padding:2px !important;
+padding-top:0px !important;
   
+}
+  
+.dropdownMenu{
+  position: absolute;
+ 
+}

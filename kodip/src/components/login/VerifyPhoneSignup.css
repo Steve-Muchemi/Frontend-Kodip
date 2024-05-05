@@ -1,0 +1,25 @@
+.signup-back-button, 
+.signup-next-button
+{
+ 
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-family: serif;
+  
+
+}
+
+.signup-verify-button{
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    font-family: serif;
+  
+}
+
+.signup-next-back-div{
+margin-top :50px;
+justify-content: space-between;
+display: flex;
+}

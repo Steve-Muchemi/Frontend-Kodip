@@ -5,7 +5,7 @@ export default function ConnectComponent(){
   
   const [sample, setsample ] = useState('');
 
-  setsample('soemthing')
+ 
     return (
             
   <> its me </>

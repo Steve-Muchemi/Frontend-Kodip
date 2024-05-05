@@ -14,7 +14,7 @@ const CommentForm = ({ postId }) => {
   const [error, setError] = useState(null);
 
 console.log(localStorage)
-
+/*
   const getuserslocation = () => {
   
     if (navigator.geolocation) {
@@ -34,10 +34,10 @@ console.log(localStorage)
     }
   };
 
-  
+  */
 
   const handleSubmit = (e) => {
-    getuserslocation();
+    //getuserslocation();
     e.preventDefault();
     
     // Get user's location
@@ -52,7 +52,7 @@ console.log(localStorage)
       timestamp: 'Just now',
       reactions: { like: 0, superReact: 0 },
       userId: localStorage.userid,
-      location: location,
+      
     };
 
     console.log(saveComment);

@@ -78,9 +78,11 @@ const ProfileForm = () => {
   };
 
   return (
+    
+    
     <div className="profile-form-container">
-      <h2>Profile</h2>
-      <form onSubmit={handleSubmit}>
+      
+      <form className='profile-form' onSubmit={handleSubmit}>
         <div className="profilepic-name">
           <div
             onMouseEnter={handleMouseEnter}
@@ -136,6 +138,7 @@ const ProfileForm = () => {
         <button type="submit">Save Changes</button>
       </form>
     </div>
+    
   );
 };
 

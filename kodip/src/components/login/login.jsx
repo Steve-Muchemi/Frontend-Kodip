@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import { useSocketContext } from '../../hooks/useSocketContext.js';
 import { AuthContext } from '../../context/AuthProvider.js';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import Loginmodal from './loginmodal.js';
+
 import "./login.css";
 
 
@@ -55,40 +59,44 @@ const handleClose = () => {setModalOpen(false);};
 
                 <div>
           <div className="dropdownContainer">
-            {!showDropdown && <button onClick={toggleDropdownTrue} className="text" style={{fontSize: '18px'}}>
-            
-            {localStorage.profilepic ? (
+            {!showDropdown && <button onClick={toggleDropdownTrue} className="login-btn-text" style={{fontSize: '18px'}}>
+            <FontAwesomeIcon icon={faUser} className="login-profile-icon" />
+            <FontAwesomeIcon icon={faAngleDown} className="login-profile-icon" />
+            {/*localStorage.profilepic ? (
         <img src={localStorage.profilepic} alt="Profile" className="profile-pic-login" />
+
       ) :  (
         <div className="profile-initial">
   {localStorage.username ? localStorage.username.charAt(0).toUpperCase() : ''}
 </div>
-      )}
+      )*/}
 
             </button>}
 
-            {showDropdown && <button onClick={toggleDropdownFalse} className="text" style={{fontSize: '18px'}}>
+            {showDropdown && <button onClick={toggleDropdownFalse} className="login-btn-text" style={{fontSize: '18px'}}>
+            <FontAwesomeIcon icon={faUser} className="login-profile-icon" />
+            <FontAwesomeIcon icon={faAngleDown} className="login-profile-icon" />
             
-            {localStorage.profilepic ? (
+            {/*localStorage.profilepic ? (
         <img src={localStorage.profilepic} alt="Profile" className="profile-pic-login" />
       ) : (
         <div className="profile-initial">
   {localStorage.username ? localStorage.username.charAt(0).toUpperCase() : ''}
 </div>
-      )}
+      )*/}
 
             </button>}
 
             {showDropdown && (
               <div className="dropdownMenu">
-                <button  className="text" style={{fontSize: '12px'}}>
+                <button  className="login-btn-text" style={{fontSize: '12px'}}>
                   
-                  <Link to="/profile"> Profile </Link>
+                  <Link to="/profile"> <div className='btn-text'> Profile </div> </Link>
                 </button>
                 <br/>
 
-                <button onClick={handleLogout} className="text" style={{fontSize: '12px'}}>
-                  Logout?
+                <button onClick={handleLogout} className="login-btn-text" style={{fontSize: '12px'}}>
+                <div className='btn-text'> Logout? </div>
                 </button>
               </div>
             )}
@@ -96,14 +104,29 @@ const handleClose = () => {setModalOpen(false);};
         </div>
         )}
     
+ 
+    <Modal
+        isOpen={modalOpen}
+        onRequestClose={handleClose}
+        className="modal"       
+      >
+        <Loginmodal/>
+
+        </Modal>
+    </div>
+  );
+}
+
+export default LoginForm;
+
+/**
+ * 
       <Modal
         isOpen={modalOpen}
         onRequestClose={handleClose}
         className="modal"       
       >
-         {/* displayName shows either the login or register  depending on whether user clicks login or signup buttons
-        
-        */}
+         
         {!displayName && (
           <form onSubmit={handleLogin} className="form">
           <p style = {{fontWeight: 'bold'}}> Welcome back! Login with your details below 😊! </p>
@@ -164,10 +187,4 @@ const handleClose = () => {setModalOpen(false);};
           </form>
         )}
             </Modal>
-      
-    </div>
-  );
-}
-
-export default LoginForm;
-
+ */

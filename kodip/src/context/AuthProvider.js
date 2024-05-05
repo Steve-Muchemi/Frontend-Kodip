@@ -17,7 +17,7 @@ export const AuthProvider = ({children}) => {
   const [password, setPassword] = useState('');
   
   const [displayName, setDisplayName] = useState('');
- const [setUserName, username] =useState('');
+ const [username, setUserName] =useState('');
   const [name, setName] = useState('');
   const [loginerror, setloginerror] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -48,53 +48,36 @@ if (localStorage.token){
 
 //console.log('when socket provider loads login:', login)
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-     
-    // send request to API to create a users jwt token 
-    const loginData ={
-      email: email,
-      password: password,
-      
-      };
-    
-      axios.post('http://localhost:3002/api/user/login', loginData)
-      .then((response) =>{
-            
-      const {username, token, userid, profilepic} = response.data;
-     
+const handleLogin = async (phone, username, password) => {
+
+const username1 = username;//avoiding conflict with globally declared username
+  try {
+    console.log('phone, usename, password', phone, username1,password)
+      // Determine whether the user is logging in with a phone number or username
+      const loginData = phone
+          ? { phone: phone, password: password }
+          : { username: username1, password: password };
+
+      // Send request to API to log in the user
+      const response = await axios.post('http://localhost:3002/api/user/login', loginData);
+
+      // Extract necessary data from the response
+      const { username, token, userid, profilepic } = response.data;
+
+      // Store user data in local storage
       localStorage.setItem('userid', userid);
       localStorage.setItem('username', username);
-      localStorage.setItem('email', email);
       localStorage.setItem('profilepic', profilepic);
       localStorage.setItem('token', token);
 
-      /*
-      // Setting cookies
-      setCookie(null, 'token', token, {
-        maxAge: 30 * 24 * 60 * 60,
-        path: '/',
-        httpOnly: true, // Prevents client-side JavaScript from accessing the cookie
-        secure: true, //Cookie can only be transmitted over HTTPS
-        sameSite: 'strict', // Ensures cookie is only sent on same-site requests
-      });
-*/
-      // will check if token is invalid later etc...
-      //console.log('Logged In', response.data);
-      setLogin(true); // socket IO provider context for indicating you've logged in
-     
-      setName(name);
+      // Update login status
+      setLogin(true);
       setModalOpen(false); // Close the modal after successful login
-
-      })
-      .catch((error)=>{console.error('login fail:', error, loginData)})
-      
-    } catch (error) {
-      //console.log(error);
+  } catch (error) {
+      console.error('Login failed:', error);
       setloginerror(error.message);
-    }    
-  };
+  }
+};
 
 
 
@@ -109,6 +92,7 @@ if (localStorage.token){
           username: localStorage.username,
           userid: localStorage.userid,
           profilepic: localStorage.profilepic,
+
         };
     
        socket.emit('user login', userobj);
@@ -118,17 +102,20 @@ if (localStorage.token){
         }, [login])
 
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+  const handleSignUp = async (name, username, email, phone, password) => {
+    //console.log('signup called', e)
+   const username1 = username
     try {
 
       const reigsterdata = {
-        username: name,
+        username: username1,
         email: email,
     password: password,
-    UserType: 'not set',
+    UserType: 'general',//idea; have user type set to either a tenant, a local, or a normal user.
+   name:name,
+    phone: phone
     }
-    //console.log("registering", reigsterdata)
+    console.log("registering", reigsterdata)
     
     axios.post('http://localhost:3002/api/user/register', reigsterdata)
     .then((response) =>{
@@ -192,7 +179,7 @@ if (localStorage.token){
        
     email, setEmail,
     password, setPassword,
-  
+  name, setName,
     loginerror, setloginerror,
     showDropdown, setShowDropdown,
     handleLogin, handleSignUp, handleLogout,

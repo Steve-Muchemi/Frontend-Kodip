@@ -12,6 +12,7 @@ import Connect from "../../connect/connect";
 import ListProperty from '../../ListProperty/ListProperty';
 import Notification from '../notification/notification';
 import SearchBar from '../../../pages/searchbar';
+import HorizontalBar from "./HorizontalBar/HorizontalBar";
 
 
 const Navbar = () => {
@@ -46,36 +47,35 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="nav-bar">
-        <div className="logo">
+      <div className="navi-bar">
+        <div className="nav-bar">  
+        <div className="logo-search">
           <img src={logo} alt="logo" />
           
+          <SearchBar/>
         </div>
 
 
         <div className="nav-links">
         
-         {
-          (locationPath == '/' &&        
-            navLink.map((item, idx) => {
-            return (
-              <ul key={idx}>
-                <li className= 'nav-button-style'>
-                <Link style={{ textDecoration: 'none', color:'black', fontWeight:'700px', fontSize:'14px', minWidth:'80px' }} to={item.link}>{item.name}</Link> {item.icon}
-                 
-                </li>
-              </ul>
-            );
-          }))   
-          }
-       <SearchBar/>
-        <Link style={{ textDecoration: 'none', color:'black', }} to="/map">  <ListProperty/></Link> 
+        <div className="btn-links">
+       
+       {<Link style={{ textDecoration: 'none', color:'black', }} to="/map">  <ListProperty/></Link>
+
+       }  
         <LoginForm/> 
 
-        
         </div>
-      </div>
+        </div>    
+        </div> 
+<div className="options"> 
 
+<HorizontalBar/>
+
+</div>
+
+      </div>
+      
       <div className="mobile-nav">
         <div className="mobile-logo">
           <img src={logo} alt="logo" />
