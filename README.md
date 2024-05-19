@@ -1,6 +1,6 @@
-# KODIP React Frontend App
+# KODISWIFT React Frontend App
 
-Welcome to the KODIP React Frontend App! This project utilizes React and follows a structured approach to manage components and assets. Kindly adhere to the guidelines below for contributions to maintain consistency.
+Welcome to the KODISWIft React Frontend App! This project utilizes ReactJS, SocketIO and follows a structured approach to manage components and assets. Kindly adhere to the guidelines below for contributions to maintain consistency.
 
 ## Project Structure
 
