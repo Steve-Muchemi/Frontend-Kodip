@@ -1,0 +1,10 @@
+
+.mapComponent {
+width: 100vh;
+height: 100vh;
+
+}
+
+.react-bingmaps {
+    position: absolute;
+}

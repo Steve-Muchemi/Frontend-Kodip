@@ -1,0 +1,163 @@
+.Modal {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    padding: 20px;
+    width: 80%;
+    max-width: 1258px;
+    height: 90%;
+    align-items: center;
+    border-radius: 0px;
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+    max-height: calc(100vh - 20px);
+  }
+  
+  .popup {
+    position: fixed;
+    border: none;
+    margin: 10% auto;
+    margin-top: 0px;
+    width: 96%;
+    max-width: 1100px;
+    height: 97%;
+  }
+  
+  .UserImage {
+    width: 59px;
+    height: 59px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    margin-left: 100px;
+    margin-top: 10px;
+  }
+  
+  .Modalheader {
+    display: flex;
+    flex: wrap;
+    color: black;
+    text-align: center;
+    font-size: 25px;
+    align-items: center;
+    padding-right: 1000;
+    justify-content: space-around;
+
+  }
+  
+  .Modalheadertitle {
+    margin: 10px;
+    font-size: 39px;
+  }
+  
+  .Modalimages {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: none;
+  }
+  
+  .imagepop1 {
+    padding: 4%;
+    border-radius: 12px;
+    width: 60%;
+    max-width: 1000px;
+    padding-bottom: 2px;
+  }
+  
+  .imagepopgroup {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 10%;
+    width: 26%;
+    margin-top: 3%;
+  }
+  
+  .imagepop2 {
+    height: 50%;
+    width: 110%;
+    padding-top: 8px;
+  }
+  
+  .ModalDescription {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px;
+    width: 95%;
+    max-width: 1000px;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    border: none;
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+  
+  .ModalDescriptionbox {
+    border: solid;
+    padding: 14px;
+    border-radius: 10px;
+    color: rgb(116, 107, 107);
+    border: none;
+    padding-top: 0px;
+    width: 60%;
+  }
+  
+  .ModalMap {
+    border: none;
+    border-radius: 10px;
+    width: 300px;
+    height: 350px;
+    margin-left: 0px;
+    overflow: hidden;
+  }
+  
+  .closeselected {
+   position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    background: black;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+  
+  .closeselected:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+    box-shadow: 0px 0px 20px #87cefa;
+  }
+  
+  .closeselected:active {
+    background: linear-gradient(to right, #87cefa, #add8e6);
+  }
+  
+  .propertyprice {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: 0px;
+    font-weight: 700;
+    text-align: inherit;
+    color: rgb(26, 24, 22);
+    word-break: normal;
+    font-family: "Galano Grotesque Alt", "Adjusted Trebuchet MS Fallback", "Trebuchet MS", sans-serif;
+  }
+  
+  .similar{
+    margin-top: 36px;
+  }
+  .similar h3{
+    margin: 30px;
+  }
+  .similar-flex {
+    display: flex;
+  }

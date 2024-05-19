@@ -1,0 +1,35 @@
+.message_input {
+    /* Add any necessary styling for the outer container */
+    bottom: 10px;
+    position: absolute;
+  }
+  
+  .input-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 185%; /* Add a border for visual separation, adjust as needed */
+    border-radius: 14px;
+    
+  }
+  
+  .chat-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 8px; /* Adjust padding as needed */
+    border-radius:8px;
+    border: 1px solid #ccc;
+    margin-left:10px;
+  }
+  
+  .icons {
+    display: flex;
+  }
+  
+  .icon {
+    margin-right: 10px; /* Adjust spacing between icons as needed */
+    cursor: pointer;
+  }
+  
+  /* Add any additional styling as needed */

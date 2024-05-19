@@ -1,0 +1,161 @@
+.entire-contacts{
+    max-width: 40%; 
+   }
+   
+    
+    .search{
+     
+    
+     display: flex;
+     border-radius: 15px;
+     margin: 10px;
+     overflow: hidden;
+     
+     height:15%;
+     flex-direction: column;
+    
+     
+     }
+   
+     .search_contacts{
+       
+       background-color: white;
+       height: 150%;
+       border-radius: 10px;
+       border-color: #add8e62b;
+       width: 90%;
+     }
+   
+     .notifications{
+     color: black;
+     font-size: large;
+     font-weight: bold;
+     padding-left: 10px;
+    font-family: Lexend;
+     
+   }
+   
+     .contacts {
+     background-color: white;
+    
+     display: flex;
+     border-radius: 15px;
+     margin: 10px;
+     overflow: hidden;
+     height: 80%;
+   
+     
+   
+     }
+    
+    
+   
+   .contacts .h3 {
+       background: #4ebaefd4;
+       padding: 5px;
+       margin: 10px;
+       border-radius: 10px;
+   }
+   
+     .contacts-list {
+       max-width: 600px; /* Adjust as needed */
+       margin: 0 auto;
+     }
+   
+     
+     ul {
+         
+       list-style-type: none;
+       padding: 0;
+       overflow: scroll;
+       max-height: 315px;
+     }
+    
+     ul::-webkit-scrollbar {
+       width: 0px; /* Set the width of the scrollbar */
+     }
+     li {
+       margin-bottom: 0px;
+       cursor: pointer;
+     }
+   
+     .contact1{
+       background-color: white;
+     }
+     
+     .contact-item {
+       display: flex;
+      
+       flex-direction: column;
+       border-bottom: 2px solid #ddd;
+       border-radius: 0px;
+       transition: background-color 0.3s ease;
+       padding: 10px;
+       
+     }
+     .contact-details{
+       display: flex;
+       
+       flex-direction: row;
+     }
+     .contact-item:hover {
+       background-color: #f8f8f8;
+     }
+     
+     .profile-pix {
+       width: 50px;
+       height: 50px;
+       border-radius: 50%;
+       margin-right: 10px;
+     }
+     
+     h4 {
+       margin: 0;
+       color:#535151;
+     }
+    
+   
+   
+   
+     /* Add these styles to your contacts.css file */
+   
+   
+   
+     /* Add these styles to your contacts.css file */
+   
+   .info {
+     display: flex;
+     flex-direction: column;
+     margin-left: 10px;
+   }
+   
+   .name {
+     display: flex;
+     align-items: center;
+     width: 20vh;
+     justify-content: space-between;
+   }
+   
+   .notification-badge {
+     background-color: #ff5252;
+     color: #fff;
+     border-radius: 50%; /* Set border-radius to 50% for a circular shape */
+     width: 20px; /* Set a fixed width to ensure a circular shape */
+     height: 20px; /* Set a fixed height to ensure a circular shape */
+     text-align: center;
+     line-height: 20px; /* Ensure the text is centered vertically */
+     margin-left: 10px;;
+   }
+   
+   
+     .latest-message {
+       font-size: 0.8em;
+       margin: 5px 0 0;
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+       max-width: 60%; /* Set a maximum width to allow ellipsis */
+     }
+     
+   
+   

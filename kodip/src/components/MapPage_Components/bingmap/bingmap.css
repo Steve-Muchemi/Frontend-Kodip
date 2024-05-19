@@ -1,0 +1,118 @@
+.Infobox {
+    border: unset !important
+}
+
+.infoboximage{
+    border-radius: 10px;
+}
+.infobox-title{
+    display:none;
+}
+
+
+.infobox-body{
+
+    max-width: 256px;
+    
+}
+.infobox-info{
+    max-height:none !important
+}
+.infobox-actions{
+    height: 50px !important;
+    justify-content: space-evenly;
+    display: flex;
+    color:gray !important;
+    font-family: 'Lexend';
+    margin: -12px 0 -4px !important;
+}
+
+.infobox-actions .ul .li .a{
+    color:gray !important;
+    
+}
+.MicrosoftMap .Infobox {
+    position: relative;
+    border: 1px solid #888;
+    border-radius: 8px;
+    left: 12px !important;
+    bottom: 117px;
+    pointer-events: auto;
+    background-color: #fff;
+    height:200px;
+    top: -79px !important;
+
+    }
+.NavBar_Container{
+top: 50vh !important
+}
+.post-property-modal {
+
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   
+    position: absolute;
+    z-index: 3;
+    
+}
+.close-propertyform{
+
+
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  right: 10px;
+  background-color: #80808030;
+  border-radius: 10px;
+  width: 34px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.custom-icon {
+    font-size: 12px; /* Adjust the font size as needed */
+    color: black;
+    display:none;
+    width: 5 px;
+        height: 5 px
+
+  }
+
+  .infobox-actions-list .ul .li .a{
+    color:gray;
+    font-family: 'Lexend';
+
+  }
+
+  .MicrosoftMap .Infobox .infobox-info{
+    padding:0px;
+  }
+  .MicrosoftMap .Infobox.no-title .infobox-info{
+    margin-right:0px !important
+  }
+
+  .MicrosoftMap .Infobox .infobox-stalk, .MicrosoftMap .InfoboxCustom .infobox-stalk{
+    top: 199px !important;
+    left: 110px !important;
+  }
+
+  .MicrosoftMap .Infobox .infobox-actions-list li:last-child a,
+.MicrosoftMap .Infobox .infobox-actions-list li a {
+  color: gray !important;
+  transition: color 0.3s ease; 
+  text-decoration: none;
+  text-decoration: none; /* Remove underline from links */
+  transition: color 0.3s ease, transform 0.3s ease; 
+}
+
+.MicrosoftMap .Infobox .infobox-actions-list li:last-child a:hover,
+.MicrosoftMap .Infobox .infobox-actions-list li a:hover {
+  color: green !important; /* Change color on hover */
+  transform: scale(1.1); 
+}

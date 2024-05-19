@@ -1,0 +1,46 @@
+
+  /* Style the message app */
+  .message-button{
+    background: black;
+    border-radius: 5px;
+    position: relative;
+    top: 150px;
+    height: 50px;
+
+  }
+
+  .message-app {
+
+background-color: #e5f1ff;
+left: 100px;
+z-index: 4;
+position: absolute;
+border-radius: 30px;
+top: 120px;
+display:flex;
+
+width: 800px;
+height: 600px;
+box-shadow: 9px 8px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  @media only screen and (max-width: 1400px) {
+    .message-app {
+        width: 600px;
+        height: 500px;
+    }
+}
+  
+
+  
+
+.thirdrow{
+ 
+  background-color: #ffffffdb;
+  width: 30%;
+  min-width: 20px;
+  display: flex;
+  height :100%;
+  position: relative;
+}
+

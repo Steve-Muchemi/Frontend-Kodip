@@ -1,0 +1,113 @@
+.property-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.property-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.slide {
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.lookforname {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.add-images,
+.next-button,
+.prev-button,
+.submit-button,
+.amenities button {
+  padding: 10px 20px;
+  border: solid 1px;
+  border-radius: 20px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+
+.add-images,
+.next-button,
+.prev-button,
+.add-property {
+  padding: 10px 20px;
+  border: solid 1px;
+  border-radius: 20px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+}
+
+
+
+
+
+.submit-button {
+  background-color: #28a745;
+}
+
+.next-button:hover,
+.prev-button:hover,
+.submit-button:hover,
+.amenities button:hover {
+  background-color: #55efa0c9;
+}
+
+.amenities-container {
+  margin-bottom: 20px;
+}
+
+.amenities {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.amenities button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.amenities button.selected {
+  background-color: #55efa0c9;
+}
+
+.amenities button.selected:hover {
+  background-color: #55efa0c9;
+}
+
+
+
+
+
+
+
+
+
+
+
