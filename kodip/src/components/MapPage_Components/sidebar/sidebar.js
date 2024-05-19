@@ -58,10 +58,10 @@ const SideBar = () => {
           </Link>
 
           
-          <Link to="/connect"> 
+          <Link to="/connectpage"> 
           <FontAwesomeIcon 
           icon={faTowerBroadcast }         
-          className={`icons ${locationPath == '/connect' ? 'active' : ''}`} 
+          className={`icons ${locationPath == '/connectpage' ? 'active' : ''}`} 
           /> </Link>
 
           

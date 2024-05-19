@@ -1,0 +1,108 @@
+/* styles.css */
+
+.comment-list {
+    margin-top: 20px;
+  }
+  
+  .comment {
+        padding: 10px;
+        border-left: 1px dotted #96a39e;
+  }
+  
+  .comment-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc; /* Placeholder color */
+    margin-right: 10px;
+  }
+  
+  .comment-info {
+    flex: 1;
+  }
+  
+  .user-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .timestamp {
+    color: #888;
+  }
+  
+  .comment-text {
+    margin-top: 10px;
+  }
+  
+  .comment-actions {
+    argin-top: 15px;
+  }
+  
+  .edit-button,
+  .delete-button,
+  .reply-button {
+    border: none;
+    background-color: transparent;
+    color: #007bff;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .reply-button {
+    margin-left: auto;
+  }
+  
+  .reply-textarea {
+    width: calc(100% - 20px);
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: vertical;
+  }
+  
+  .submit-reply-button {
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .replies {
+   
+  }
+  
+  /* Reactions */
+  
+  .reactions {
+    margin-top: 0px;
+  }
+  
+  .commentsList-reaction-button {
+    border: none;
+    background-color: transparent;
+    color: #888;
+    cursor: pointer;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    padding:0px;
+  }
+  .commentsList-reaction-button-heart{
+    padding:0px !important;
+    margin-right: 10px !important;
+  }
+
+  
+  .reaction-button svg {
+    margin-right: 5px;
+  }
+  

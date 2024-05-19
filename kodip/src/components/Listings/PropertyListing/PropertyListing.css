@@ -1,0 +1,30 @@
+.PropertyListingCss {
+  color: black;
+  background-color: rgb(246 249 252 / 40%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  position: relative;
+  margin: 150px;
+  width: 75vw;
+  background-color: rgb(246 249 252 / 0%);
+}
+
+.render-listings {
+  color: black;
+  background-color: rgb(246 249 252 / 40%);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  position: relative;
+  margin-top: 0px;
+  margin-left: 30px;
+  width: 75vw;
+  background-color: rgb(246 249 252 / 0%);
+}
+
+@media only screen and (max-width: 600px) {
+  .PropertyListingCss {
+    padding: 10px;
+  }
+}

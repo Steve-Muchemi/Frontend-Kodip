@@ -1,7 +1,7 @@
 // Loginmodal.js
 import React, { useState } from 'react';
-import SignupStep from './SignupStep';
-import LoginStep from './LoginStep';
+import SignupStep from './SignUpSteps/SignupStep';
+import LoginStep from './LoginStep/LoginStep';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';

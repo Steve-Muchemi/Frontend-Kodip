@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './PropertyForm.css';
 import useOnSearch from "./../../hooks/useSearch";
@@ -31,21 +31,35 @@ const PropertyForm = () => {
   const [measurement, setMeasurement] = useState('');
 
   const [images, setImages] = useState([]);
+  const [locationString, setLocationString] = useState('');
 
 
 
+useEffect(() => {
+  if (postCoordinates.length === 2) {
+    const [latitude, longitude] = postCoordinates;
+    getLocationName(latitude, longitude);
+  }
+}, [postCoordinates]);
 
-  useState(()=>{ 
-    setPushpin( {
-        location : postCoordinates,
-        infoboxOption: {
-          title: '',
-          description: '',
-          propertyType: '',
-        },
-        
-      })
-  }, [postCoordinates])
+
+const getLocationName = async (latitude, longitude) => {
+  const apiKey = "AimaoVvThYG5kUK8jG8Gya7X7Q1lHKXk54RztUw2UNUGJR9Bbkna4DDkYqOWeHjv"// Replace with your actual Bing Maps API Key
+  try {
+    const response = await axios.get(`http://dev.virtualearth.net/REST/v1/Locations/${latitude},${longitude}?o=json&key=${apiKey}`);
+    const resources = response.data.resourceSets[0]?.resources;
+    if (resources && resources.length > 0) {
+      const locationName = resources[0].address.formattedAddress;
+      setLocationString(locationName);
+      console.log(locationName, 'name of location')
+    } else {
+      setLocationString("Unknown location");
+    }
+  } catch (error) {
+    console.error("Error fetching location name:", error);
+    setLocationString("Error fetching location");
+  }
+};
 
 
   const handleFormSubmit = async (e) => {
@@ -64,7 +78,8 @@ const PropertyForm = () => {
     formData.append('bathrooms', bathrooms);
     formData.append('measurement', measurement);
     formData.append('description', description);
-    formData.append('pushpin', pushpin);
+    formData.append('description', description);
+    formData.append('locationString', locationString);
     images.forEach((image) => {
       formData.append('images', image);
     });
@@ -117,16 +132,6 @@ const PropertyForm = () => {
     document.querySelector('.form-group2').appendChild(newInput);
 
   }
-
-
-
-
-
-
-
-
-
-
 
 
 

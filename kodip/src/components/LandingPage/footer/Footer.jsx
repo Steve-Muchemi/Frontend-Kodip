@@ -44,15 +44,15 @@ const Footer = () => {
 
   const contact = [
     {
-      title: "2464 Royal Ln. Mesa, New Jersey 45463",
+      title: "Kasarani, Nairobi",
       link: ""
     },
     {
-      title: "(671) 555-0110",
+      title: "+254 7623 8181 3",
       link: ""
     },
     {
-      title: "info@hounter.com",
+      title: "info@kodiswift.com",
       link: ""
     },
   ]

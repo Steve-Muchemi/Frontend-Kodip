@@ -5,32 +5,27 @@ import {
   faMoneyBillAlt,
   faSwimmingPool,
   faCalendarAlt,
- 
   faHome,
-  
   faCity,
   faCar,
   faDog,
   faSnowflake,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
-import './HorizontalBar.css'; // Import your custom CSS for styling
+import './HorizontalBar.css'; 
 
 const HorizontalBar = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [showSubOptions, setShowSubOptions] = useState(false);
   const [selectedSubOption, setSelectedSubOption] = useState('');
-
   const handleOptionClick = (option) => {
     setSelectedOption(option);
     setShowSubOptions(true);
   };
-
   const handleSubOptionClick = (subOption) => {
     setSelectedSubOption(subOption);
     setShowSubOptions(false);
   };
-
   const options = [
     {
       name: 'House',
@@ -73,8 +68,6 @@ const HorizontalBar = () => {
       ],
     },
   ];
-
-
 
   //const ShowHorizontalbar = ? 'horizontal-bar-special' : 'horizontal-bar';
   return (

@@ -11,7 +11,7 @@ import LoginForm from "../../login/login";
 import Connect from "../../connect/connect";
 import ListProperty from '../../ListProperty/ListProperty';
 import Notification from '../notification/notification';
-import SearchBar from '../../../pages/searchbar';
+import SearchBar from '../../SearchBar/searchbar';
 import HorizontalBar from "./HorizontalBar/HorizontalBar";
 
 
@@ -19,6 +19,8 @@ const Navbar = () => {
   const [menu, setMenu] = useState(false);
   const { overlay, setOverlay } = useOverlay();
   const locationPath = useLocation().pathname;
+
+  const Map = ListProperty;
 
   const navLink = [
     {
@@ -54,28 +56,18 @@ const Navbar = () => {
           
           <SearchBar/>
         </div>
-
-
         <div className="nav-links">
-        
         <div className="btn-links">
-       
-       {<Link style={{ textDecoration: 'none', color:'black', }} to="/map">  <ListProperty/></Link>
-
+       {<Link style={{ textDecoration: 'none', color:'black', }} to="/map">  <Map/></Link>
        }  
         <LoginForm/> 
-
         </div>
         </div>    
         </div> 
-<div className="options"> 
-
-<HorizontalBar/>
-
-</div>
-
+    <div className="options"> 
+        <HorizontalBar/>
+    </div>
       </div>
-      
       <div className="mobile-nav">
         <div className="mobile-logo">
           <img src={logo} alt="logo" />
