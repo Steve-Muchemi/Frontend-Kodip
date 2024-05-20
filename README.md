@@ -1,7 +1,7 @@
 # KodiSwift React Frontend App
 
 Welcome to the KodiSwift React Frontend App! 
-KodiSwift is designed to bridge the gap between ofmarket rental properties and tenants. Visit KodiSwift.com/projectdescription to learn more about the vision of the application.
+KodiSwift is designed to bridge the gap between ofmarket rental properties and tenants. Visit www.KodiSwift.com to learn more about the vision of the application.
 
 This project utilizes ReactJS, SocketIO and follows a structured approach to manage components and assets. Kindly adhere to the guidelines below for contributions to maintain consistency.
 
